@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { Button } from '@/Components/ui/button';
+import { Input } from '@/Components/ui/input';
+import { Checkbox } from '@/Components/ui/checkbox';
+import { ArrowRight } from 'lucide-react';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -28,70 +28,76 @@ export default function Login({ status, canResetPassword }) {
 
     return (
         <GuestLayout>
-            <Head title="Log in" />
+            <Head title="Entrar" />
 
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+            <div className='flex flex-col items-center'>
+                <h1 className='text-3xl'>Entre com sua conta</h1>
+                <span className='text-md'>Entre com seu e-mail e senha ou use sua rede social</span>
+            </div>
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
+            {status && <div className="mb-4 text-sm font-medium text-green-600">{status}</div>}
 
-                    <TextInput
+            <div className='flex justify-center mt-5'>
+
+                <form className='w-4/6' onSubmit={submit}>
+
+                    <Input
                         id="email"
                         type="email"
                         name="email"
+                        placeholder="nome@empresa.com.br"
                         value={data.email}
-                        className="mt-1 block w-full"
+                        className="block w-full mt-1"
                         autoComplete="username"
-                        isFocused={true}
                         onChange={(e) => setData('email', e.target.value)}
                     />
 
                     <InputError message={errors.email} className="mt-2" />
-                </div>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="block mt-4">
-                    <label className="flex items-center">
-                        <Checkbox
-                            name="remember"
-                            checked={data.remember}
-                            onChange={(e) => setData('remember', e.target.checked)}
+                    <div className="mt-4">
+                        <Input
+                            id="password"
+                            type="password"
+                            name="password"
+                            placeholder="********"
+                            value={data.password}
+                            className="block w-full mt-1"
+                            autoComplete="current-password"
+                            onChange={(e) => setData('password', e.target.value)}
                         />
-                        <span className="ms-2 text-sm text-gray-600">Remember me</span>
-                    </label>
-                </div>
 
-                <div className="flex items-center justify-end mt-4">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
+                        <InputError message={errors.password} className="mt-2" />
+                    </div>
 
-                    <Button className="ms-4" disabled={processing}>
-                        Entrar
-                    </Button>
-                </div>
-            </form>
+                    <div className="flex justify-start pl-1 mt-4">
+                        <span className="flex items-center space-x-2">
+                            <Checkbox
+                                name="remember"
+                                id="remember"
+                                checked={data.remember}
+                                onCheckedChange={(e) => setData('remember', e)}
+                            />
+                            <label htmlFor='remember' className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Lembrar</label>
+                        </span>
+                    </div>
+
+                    <div className="flex items-center justify-end mt-4">
+                        {canResetPassword && (
+                            <Link
+                                href={route('password.request')}
+                                className="text-sm text-muted-foreground"
+                            >
+                                Esqueceu sua senha?
+                            </Link>
+                        )}
+
+                        <Button className="ms-4" disabled={processing}>
+                            Entrar
+                            <ArrowRight size={16} className="ml-1" />
+                        </Button>
+                    </div>
+                </form>
+            </div>
         </GuestLayout>
     );
 }
