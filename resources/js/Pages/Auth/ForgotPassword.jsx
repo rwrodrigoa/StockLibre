@@ -4,6 +4,7 @@ import { Head, useForm, Link } from '@inertiajs/react';
 import { Input } from '@/Components/ui/input';
 import { Button } from '@/Components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import ApplicationLogo from '@/Components/ApplicationLogo';
 
 export default function ForgotPassword({ status }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -19,6 +20,11 @@ export default function ForgotPassword({ status }) {
     return (
         <GuestLayout>
             <Head title="Esqueceu sua senha?" />
+
+            <Link href="/" className='absolute flex items-center gap-3 md:hidden top-3'>
+                <ApplicationLogo className="w-10 h-10 fill-current" />
+                <h1 className='font-bold uppercase'>StockLibre</h1>
+            </Link>
 
             <div className='flex flex-col items-center'>
                 <h1 className='text-3xl'>Esqueceu sua senha?</h1>

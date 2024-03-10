@@ -1,13 +1,11 @@
 import { useEffect } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, useForm, Link } from '@inertiajs/react';
 import { Input } from '@/Components/ui/input';
 import { Button } from '@/Components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import ApplicationLogo from '@/Components/ApplicationLogo';
 
 export default function ConfirmPassword() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -29,6 +27,11 @@ export default function ConfirmPassword() {
     return (
         <GuestLayout>
             <Head title="Confirme sua senha" />
+
+            <Link href="/" className='absolute flex items-center gap-3 md:hidden top-3'>
+                <ApplicationLogo className="w-10 h-10 fill-current" />
+                <h1 className='font-bold uppercase'>StockLibre</h1>
+            </Link>
 
             <div className='flex flex-col items-center'>
                 <h1 className='text-3xl'>Confirme sua senha</h1>

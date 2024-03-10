@@ -2,6 +2,7 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { Button } from '@/Components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import ApplicationLogo from '@/Components/ApplicationLogo';
 
 export default function VerifyEmail({ status }) {
     const { post, processing } = useForm({});
@@ -15,6 +16,11 @@ export default function VerifyEmail({ status }) {
     return (
         <GuestLayout>
             <Head title="Verifique seu e-mail" />
+
+            <Link href="/" className='absolute flex items-center gap-3 md:hidden top-3'>
+                <ApplicationLogo className="w-10 h-10 fill-current" />
+                <h1 className='font-bold uppercase'>StockLibre</h1>
+            </Link>
 
             <div className='flex flex-col items-center'>
                 <h1 className='text-3xl'>Verifique seu e-mail</h1>
