@@ -32,10 +32,10 @@ export default function Login({ status, canResetPassword }) {
 
             <div className='flex flex-col items-center'>
                 <h1 className='text-3xl'>Entre com sua conta</h1>
-                <span className='text-md'>Entre com seu e-mail e senha ou use sua rede social</span>
+                <span className='mt-3 text-center text-md'>Entre com seu e-mail e senha ou use sua rede social</span>
             </div>
 
-            {status && <div className="mb-4 text-sm font-medium text-green-600">{status}</div>}
+            {status && <div className="mt-3 mb-4 text-sm font-medium text-center text-green-600">{status}</div>}
 
             <div className='flex justify-center mt-5'>
 
@@ -98,6 +98,12 @@ export default function Login({ status, canResetPassword }) {
                     </div>
                 </form>
             </div>
+            <Link
+                href={route('register')}
+                className="absolute text-sm bottom-3 right-3 text-muted-foreground"
+            >
+                Não tem uma conta? Crie uma agora
+            </Link>
         </GuestLayout>
     );
 }

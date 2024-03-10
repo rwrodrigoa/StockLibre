@@ -1,6 +1,7 @@
 import GuestLayout from '@/Layouts/GuestLayout';
-import PrimaryButton from '@/Components/PrimaryButton';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { Button } from '@/Components/ui/button';
+import { ArrowRight } from 'lucide-react';
 
 export default function VerifyEmail({ status }) {
     const { post, processing } = useForm({});
@@ -13,33 +14,38 @@ export default function VerifyEmail({ status }) {
 
     return (
         <GuestLayout>
-            <Head title="Email Verification" />
+            <Head title="Verifique seu e-mail" />
 
-            <div className="mb-4 text-sm text-gray-600">
-                Thanks for signing up! Before getting started, could you verify your email address by clicking on the
-                link we just emailed to you? If you didn't receive the email, we will gladly send you another.
+            <div className='flex flex-col items-center'>
+                <h1 className='text-3xl'>Verifique seu e-mail</h1>
+                <span className='mt-3 text-center text-m'>
+                    Obrigado por se cadastrar! Antes de começar, você poderia verificar seu endereço de e-mail clicando no
+                    link que acabamos de enviar para você? Se você não recebeu o e-mail, teremos prazer em enviar outro.
+                </span>
             </div>
-
+            <div className='flex justify-center mt-5'>
+                <form className='w-4/6' onSubmit={submit}>
+                    <div className="flex items-center justify-center mt-4">
+                        <Button className="ms-4" disabled={processing}>
+                            Enviar novamente
+                            <ArrowRight size={16} className="ml-1" />
+                        </Button>
+                    </div>
+                </form>
+            </div>
             {status === 'verification-link-sent' && (
-                <div className="mb-4 font-medium text-sm text-green-600">
-                    A new verification link has been sent to the email address you provided during registration.
-                </div>
-            )}
-
-            <form onSubmit={submit}>
-                <div className="mt-4 flex items-center justify-between">
-                    <PrimaryButton disabled={processing}>Resend Verification Email</PrimaryButton>
-
-                    <Link
-                        href={route('logout')}
-                        method="post"
-                        as="button"
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        Log Out
-                    </Link>
-                </div>
-            </form>
+                    <div className="mt-3 mb-4 text-sm text-center text-green-600 font-sm">
+                        Um novo link de verificação foi enviado para o endereço de e-mail que você forneceu durante o registro.
+                    </div>
+                )}
+            <Link
+                href={route('logout')}
+                method="post"
+                as="button"
+                className="absolute text-sm bottom-3 right-3 text-muted-foreground"
+            >
+                Sair
+            </Link>
         </GuestLayout>
     );
 }
