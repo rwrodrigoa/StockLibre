@@ -1,13 +1,30 @@
-import { useRef, useState } from 'react';
-import DangerButton from '@/Components/DangerButton';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import Modal from '@/Components/Modal';
-import SecondaryButton from '@/Components/SecondaryButton';
-import TextInput from '@/Components/TextInput';
-import { useForm } from '@inertiajs/react';
+import { useRef, useState } from "react";
+import InputError from "@/Components/InputError";
+import { useForm } from "@inertiajs/react";
 
-export default function DeleteUserForm({ className = '' }) {
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/Components/ui/card";
+import { Button } from "@/Components/ui/button";
+
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/Components/ui/dialog";
+import { Input } from "@/Components/ui/input";
+import { Label } from "@/Components/ui/label";
+
+export default function DeleteUserForm() {
     const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
     const passwordInput = useRef();
 
@@ -19,7 +36,7 @@ export default function DeleteUserForm({ className = '' }) {
         reset,
         errors,
     } = useForm({
-        password: '',
+        password: "",
     });
 
     const confirmUserDeletion = () => {
@@ -29,7 +46,7 @@ export default function DeleteUserForm({ className = '' }) {
     const deleteUser = (e) => {
         e.preventDefault();
 
-        destroy(route('profile.destroy'), {
+        destroy(route("profile.destroy"), {
             preserveScroll: true,
             onSuccess: () => closeModal(),
             onError: () => passwordInput.current.focus(),
@@ -44,56 +61,72 @@ export default function DeleteUserForm({ className = '' }) {
     };
 
     return (
-        <section className={`space-y-6 ${className}`}>
-            <header>
-                <h2 className="text-lg font-medium text-gray-900">Delete Account</h2>
+        <Card className="mb-2">
+            <CardHeader>
+                <CardTitle>Remover Conta</CardTitle>
+                <CardDescription>
+                    Uma vez que sua conta for deletada, todos os recursos e
+                    dados associados serão permanentemente excluídos. Antes de
+                    deletar sua conta, por favor, baixe qualquer dado ou
+                    informação que deseje manter.
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <Button variant="destructive">Remover</Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>
+                                Você tem certeza de que deseja deletar sua
+                                conta?
+                            </DialogTitle>
+                            <DialogDescription>
+                                Uma vez que sua conta for deletada, todos os
+                                recursos e dados associados serão
+                                permanentemente excluídos. Por favor, digite sua
+                                senha para confirmar que gostaria de deletar
+                                permanentemente sua conta.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <div className="">
+                            <Label htmlFor="password">Senha</Label>
 
-                <p className="mt-1 text-sm text-gray-600">
-                    Once your account is deleted, all of its resources and data will be permanently deleted. Before
-                    deleting your account, please download any data or information that you wish to retain.
-                </p>
-            </header>
+                            <Input
+                                id="password"
+                                type="password"
+                                name="password"
+                                ref={passwordInput}
+                                value={data.password}
+                                onChange={(e) =>
+                                    setData("password", e.target.value)
+                                }
+                            />
 
-            <DangerButton onClick={confirmUserDeletion}>Delete Account</DangerButton>
-
-            <Modal show={confirmingUserDeletion} onClose={closeModal}>
-                <form onSubmit={deleteUser} className="p-6">
-                    <h2 className="text-lg font-medium text-gray-900">
-                        Are you sure you want to delete your account?
-                    </h2>
-
-                    <p className="mt-1 text-sm text-gray-600">
-                        Once your account is deleted, all of its resources and data will be permanently deleted. Please
-                        enter your password to confirm you would like to permanently delete your account.
-                    </p>
-
-                    <div className="mt-6">
-                        <InputLabel htmlFor="password" value="Password" className="sr-only" />
-
-                        <TextInput
-                            id="password"
-                            type="password"
-                            name="password"
-                            ref={passwordInput}
-                            value={data.password}
-                            onChange={(e) => setData('password', e.target.value)}
-                            className="mt-1 block w-3/4"
-                            isFocused
-                            placeholder="Password"
-                        />
-
-                        <InputError message={errors.password} className="mt-2" />
-                    </div>
-
-                    <div className="mt-6 flex justify-end">
-                        <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
-
-                        <DangerButton className="ms-3" disabled={processing}>
-                            Delete Account
-                        </DangerButton>
-                    </div>
-                </form>
-            </Modal>
-        </section>
+                            <InputError
+                                message={errors.password}
+                                className="mt-2"
+                            />
+                        </div>
+                        <DialogFooter>
+                            <form onSubmit={deleteUser} className="flex items-end justify-end gap-2">
+                                <Button
+                                    variant="destructive"
+                                    disabled={processing}
+                                >
+                                    Remover Conta
+                                </Button>
+                            <DialogClose asChild>
+                                <Button type="button" variant="secondary">
+                                    Cancelar
+                                </Button>
+                            </DialogClose>
+                            </form>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+            </CardContent>
+        </Card>
     );
 }
