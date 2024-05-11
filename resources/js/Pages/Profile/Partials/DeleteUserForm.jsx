@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import InputError from "@/Components/InputError";
 import { useForm } from "@inertiajs/react";
 
@@ -38,25 +38,14 @@ export default function DeleteUserForm() {
         password: "",
     });
 
-    const confirmUserDeletion = () => {
-        setConfirmingUserDeletion(true);
-    };
-
     const deleteUser = (e) => {
         e.preventDefault();
 
         destroy(route("profile.destroy"), {
             preserveScroll: true,
-            onSuccess: () => closeModal(),
             onError: () => passwordInput.current.focus(),
             onFinish: () => reset(),
         });
-    };
-
-    const closeModal = () => {
-        setConfirmingUserDeletion(false);
-
-        reset();
     };
 
     return (
