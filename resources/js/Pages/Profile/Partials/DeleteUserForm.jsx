@@ -25,7 +25,6 @@ import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 
 export default function DeleteUserForm() {
-    const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
     const passwordInput = useRef();
 
     const {
