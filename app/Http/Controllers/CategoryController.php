@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $categories = Category::where('user_id', $request->user()->id)->orderBy('name')->paginate(15);
+        $categories = Category::where('user_id', $request->user()->id)->filter($request->only(['search']))->orderBy('name')->paginate(15);
         return Inertia::render('Categories/Index', [
             'categories' => $categories,
         ]);
@@ -18,22 +18,29 @@ class CategoryController extends Controller
 
     public function create()
     {
-        //
+        return Inertia::render('Categories/Form');
     }
 
     public function store(Request $request)
     {
-        //
-    }
+        $validated = $request->validate([
+            'name' => 'required|string|max:30',
+            'description' => 'nullable|string'
+        ]);
 
-    public function show(Category $category)
-    {
-        //
+        Category::create([
+            ...$validated,
+            'user_id' => $request->user()->id
+        ]);
+
+        return redirect(route('categories.index'));
     }
 
     public function edit(Category $category)
     {
-        //
+        return Inertia::render('Categories/Form', [
+            'category' => $category,
+        ]);
     }
 
     public function update(Request $request, Category $category)

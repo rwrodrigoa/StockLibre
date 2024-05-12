@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/company', [CompanyController::class, 'update'])->name('company.update');
 
-    Route::resource('categories', CategoryController::class);
+    Route::resource('categories', CategoryController::class)->except('show');
 });
 
 require __DIR__.'/auth.php';

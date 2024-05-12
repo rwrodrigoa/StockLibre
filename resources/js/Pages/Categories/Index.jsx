@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import { Plus } from "lucide-react";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
@@ -24,6 +24,11 @@ import {
 import TablePagination from "@/Components/TablePagination";
 
 export default function Index({ auth, categories }) {
+
+    function navigateEdit(category) {
+        router.visit(route('categories.edit', category));
+    }
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Categorias" />
@@ -66,7 +71,7 @@ export default function Index({ auth, categories }) {
                         </TableHeader>
                         <TableBody>
                             {categories.data.map((category) => (
-                                <TableRow key={category.id}>
+                                <TableRow className="cursor-pointer" key={category.id} onClick={() => navigateEdit(category)}>
                                     <TableCell className="font-medium">
                                         {category.name}
                                     </TableCell>
