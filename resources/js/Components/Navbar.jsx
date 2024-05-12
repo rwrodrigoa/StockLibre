@@ -19,6 +19,7 @@ export default function Navbar({ user }) {
                 <h1 className="font-bold uppercase">StockLibre</h1>
             </Link>
             <div className="flex items-center gap-6">
+                <Link href={route('categories.index')}>Categorias</Link>
                 <Link href="#">Fornecedores</Link>
                 <Link href="#">Produtos</Link>
                 <Link href="#">Logística</Link>

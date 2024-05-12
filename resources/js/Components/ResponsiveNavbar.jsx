@@ -45,6 +45,7 @@ export default function ResponsiveNavbar({ user }) {
                             </Link>
                         </SheetTitle>
                         <div className="flex flex-col items-center gap-6">
+                            <Link href={route('categories.index')}>Categorias</Link>
                             <Link href="#">Fornecedores</Link>
                             <Link href="#">Produtos</Link>
                             <Link href="#">Logística</Link>
