@@ -46,11 +46,19 @@ class CategoryController extends Controller
 
     public function update(Request $request, Category $category)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:30',
+            'description' => 'nullable|string'
+        ]);
+
+        $category->update($validated);
+
+        return redirect(route('categories.index'));
     }
 
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect(route('categories.index'));
     }
 }

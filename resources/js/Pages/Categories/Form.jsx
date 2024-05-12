@@ -1,7 +1,12 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, Link, router, useForm } from "@inertiajs/react";
 import { Textarea } from "@/Components/ui/textarea";
 import { useToast } from "@/Components/ui/use-toast";
+import { Label } from "@/Components/ui/label";
+import { Input } from "@/Components/ui/input";
+import InputError from "@/Components/InputError";
+import { Button } from "@/Components/ui/button";
+import { Check } from "lucide-react";
 
 import {
     Card,
@@ -10,11 +15,17 @@ import {
     CardHeader,
     CardTitle,
 } from "@/Components/ui/card";
-import { Label } from "@/Components/ui/label";
-import { Input } from "@/Components/ui/input";
-import InputError from "@/Components/InputError";
-import { Button } from "@/Components/ui/button";
-import { Check } from "lucide-react";
+
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogFooter,
+    DialogClose,
+    DialogTitle,
+    DialogTrigger,
+} from "@/Components/ui/dialog";
 
 export default function Form({ auth, category }) {
     const { toast } = useToast();
@@ -27,7 +38,7 @@ export default function Form({ auth, category }) {
         e.preventDefault();
 
         if (category) {
-            patch(route("categories.update"), {
+            patch(route("categories.update", category), {
                 onSuccess: () => {
                     toast({
                         description: (
@@ -53,6 +64,18 @@ export default function Form({ auth, category }) {
                 },
             });
         }
+    };
+
+    const remove = (e) => {
+        router.delete(route("categories.destroy", category));
+        toast({
+            description: (
+                <div className="flex items-center gap-3 align-middle">
+                    <Check />
+                    <span>Categoria removida.</span>
+                </div>
+            ),
+        });
     };
 
     return (
@@ -107,6 +130,49 @@ export default function Form({ auth, category }) {
                             />
                         </div>
                         <div className="flex items-center justify-end gap-4">
+                            {category && (
+                                <Dialog>
+                                    <DialogTrigger asChild>
+                                        <Button variant="destructive">
+                                            Remover
+                                        </Button>
+                                    </DialogTrigger>
+                                    <DialogContent>
+                                        <DialogHeader>
+                                            <DialogTitle>
+                                                Você tem certeza de que deseja
+                                                deletar a categoria?
+                                            </DialogTitle>
+                                            <DialogDescription>
+                                                Deseja realmente remover a
+                                                categoria {category.name}?
+                                                Isso irá eliminar todos os
+                                                conteúdos e produtos associados
+                                                à essa categoria. Confirme se
+                                                está certo para proceder com a
+                                                remoção.
+                                            </DialogDescription>
+                                        </DialogHeader>
+                                        <DialogFooter>
+                                            <Button
+                                                type="button"
+                                                variant="destructive"
+                                                onClick={remove}
+                                            >
+                                                Sim, desejo remover
+                                            </Button>
+                                            <DialogClose asChild>
+                                                <Button
+                                                    type="button"
+                                                    variant="secondary"
+                                                >
+                                                    Cancelar
+                                                </Button>
+                                            </DialogClose>
+                                        </DialogFooter>
+                                    </DialogContent>
+                                </Dialog>
+                            )}
                             <Button disabled={processing}>Salvar</Button>
                         </div>
                     </form>
