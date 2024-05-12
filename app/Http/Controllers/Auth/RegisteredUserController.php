@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -41,6 +43,13 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+        ]);
+
+        Company::create([
+            'name' => 'Minha empresa',
+            'user_id' => $user->id,
+            'document' => '00.000.000/0000-00',
+            'reverify' => Carbon::createFromFormat('Y-m-d', date('Y-m-d'))->add(2, 'month'),
         ]);
 
         event(new Registered($user));

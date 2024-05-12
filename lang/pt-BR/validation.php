@@ -213,7 +213,15 @@ return [
         'modality' => 'modalidade',
         'category' => 'categoria',
         'blood_type' => 'tipo sanguíneo',
-        'birth_date' => 'data de nascimento'
+        'birth_date' => 'data de nascimento',
+        'document' => 'CNPJ',
+        'reverify' => 'data da próxima contagem de estoque',
     ],
+
+    'values' => [
+        'reverify' => [
+            'today' => 'hoje'
+        ]
+    ]
 
 ];

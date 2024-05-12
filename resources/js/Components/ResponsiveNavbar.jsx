@@ -48,32 +48,15 @@ export default function ResponsiveNavbar({ user }) {
                             <Link href="#">Fornecedores</Link>
                             <Link href="#">Produtos</Link>
                             <Link href="#">Logística</Link>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger>
-                                    Usuário
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent>
-                                    <DropdownMenuLabel>
-                                        {user.name}
-                                    </DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
-                                    <Link href={route("profile.edit")}>
-                                        <DropdownMenuItem className="cursor-pointer">
-                                            Perfil
-                                        </DropdownMenuItem>
-                                    </Link>
-                                    <Link
-                                        href={route("logout")}
-                                        method="post"
-                                        as="button"
-                                        className="w-full"
-                                    >
-                                        <DropdownMenuItem className="cursor-pointer">
-                                            Sair
-                                        </DropdownMenuItem>
-                                    </Link>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
+                            <Link href={route("profile.edit")}>Perfil</Link>
+                            <Link
+                                href={route("logout")}
+                                method="post"
+                                as="button"
+                                className="w-full"
+                            >
+                                Sair
+                            </Link>
                             <div>
                                 <ModeToggle />
                             </div>
