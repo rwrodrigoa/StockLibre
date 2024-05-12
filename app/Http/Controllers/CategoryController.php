@@ -13,6 +13,7 @@ class CategoryController extends Controller
         $categories = Category::where('user_id', $request->user()->id)->filter($request->only(['search']))->orderBy('name')->paginate(15);
         return Inertia::render('Categories/Index', [
             'categories' => $categories,
+            'filter' => $request->get('search'),
         ]);
     }
 

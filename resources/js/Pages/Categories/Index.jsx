@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, router } from "@inertiajs/react";
+import { Head, Link, router, useForm } from "@inertiajs/react";
 import { Plus } from "lucide-react";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
@@ -22,11 +22,29 @@ import {
     TableRow,
 } from "@/Components/ui/table";
 import TablePagination from "@/Components/TablePagination";
+import { useEffect, useRef } from "react";
 
-export default function Index({ auth, categories }) {
+export default function Index({ auth, categories, filter }) {
+    const searchInput = useRef();
+
+    useEffect(() => {
+        searchInput.current.focus();
+    }, []);
+
+    const { data, setData, get, processing, errors } = useForm({
+        search: filter ?? "",
+    });
+
+    const submit = (e) => {
+        e.preventDefault();
+
+        get(route("categories.index"), {
+            preserveScroll: true,
+        });
+    };
 
     function navigateEdit(category) {
-        router.visit(route('categories.edit', category));
+        router.visit(route("categories.edit", category));
     }
 
     return (
@@ -42,13 +60,20 @@ export default function Index({ auth, categories }) {
                 </CardHeader>
                 <CardContent>
                     <div className="flex items-center justify-between w-full space-x-2 align-middle">
-                        <Input
-                            className="max-w-sm"
-                            id="search"
-                            type="text"
-                            placeholder="Pesquisar"
-                            name="search"
-                        />
+                        <form onSubmit={submit}>
+                            <Input
+                                className="max-w-sm"
+                                id="search"
+                                type="text"
+                                placeholder="Pesquisar"
+                                name="search"
+                                ref={searchInput}
+                                value={data.search}
+                                onChange={(e) => {
+                                    setData("search", e.target.value);
+                                }}
+                            />
+                        </form>
                         <div>
                             <Link href={route("categories.create")}>
                                 <Button variant="outline" size="icon">
@@ -71,7 +96,11 @@ export default function Index({ auth, categories }) {
                         </TableHeader>
                         <TableBody>
                             {categories.data.map((category) => (
-                                <TableRow className="cursor-pointer" key={category.id} onClick={() => navigateEdit(category)}>
+                                <TableRow
+                                    className="cursor-pointer"
+                                    key={category.id}
+                                    onClick={() => navigateEdit(category)}
+                                >
                                     <TableCell className="font-medium">
                                         {category.name}
                                     </TableCell>

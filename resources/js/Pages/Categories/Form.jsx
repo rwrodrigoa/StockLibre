@@ -18,7 +18,7 @@ import { Check } from "lucide-react";
 
 export default function Form({ auth, category }) {
     const { toast } = useToast();
-    const { data, setData, post, patch, processing, reset, errors } = useForm({
+    const { data, setData, post, patch, processing, errors } = useForm({
         name: category?.name ?? "",
         description: category?.description ?? "",
     });
@@ -93,7 +93,7 @@ export default function Form({ auth, category }) {
                         <div>
                             <Label htmlFor="description">Descrição</Label>
                             <Textarea
-                                id="name"
+                                id="description"
                                 name="description"
                                 value={data.description}
                                 className="block w-full mt-1"
