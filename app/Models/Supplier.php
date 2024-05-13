@@ -8,14 +8,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Category extends Model
+class Supplier extends Model
 {
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'name',
-        'description',
         'user_id',
+        'name',
+        'document',
+        'address',
+        'phone',
+        'email'
     ];
 
     public function user(): BelongsTo
@@ -27,7 +30,14 @@ class Category extends Model
     {
         return $query->when(
             $filters['search'] ?? false,
-            fn($query, $value) => $query->where('name', 'like', '%'.$value.'%')->orWhere('description', 'like', '%'.$value.'%')
+            fn($query, $value) => $query
+                ->where('name', 'like', '%'.$value.'%')
+                ->orWhere('description', 'like', '%'.$value.'%')
+                ->orWhere('document', 'like', '%'.$value.'%')
+                ->orWhere('address', 'like', '%'.$value.'%')
+                ->orWhere('phone', 'like', '%'.$value.'%')
+                ->orWhere('email', 'like', '%'.$value.'%')
         );
     }
+
 }

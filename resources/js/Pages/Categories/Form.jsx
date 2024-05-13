@@ -87,11 +87,7 @@ export default function Form({ auth, category }) {
                         {category ? "Editar " : "Adicionar"} categoria
                     </CardTitle>
                     <CardDescription>
-                        Uma categoria é um grupo de items ou informações que
-                        compartilham uma característica, tema ou propriedade em
-                        comum. É como uma caixa de sapatos que pode conter
-                        vários pares de sapatos diferentes, todos com um estilo
-                        ou marca específica.
+                        Estas são as informações que precisamos saber para cadastrar sua nova categoria.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>

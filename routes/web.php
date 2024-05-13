@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,6 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/company', [CompanyController::class, 'update'])->name('company.update');
 
     Route::resource('categories', CategoryController::class)->except('show');
+    Route::resource('suppliers', SupplierController::class)->except('show');
 });
 
 require __DIR__.'/auth.php';

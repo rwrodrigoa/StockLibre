@@ -54,8 +54,11 @@ export default function Index({ auth, categories, filter }) {
                 <CardHeader>
                     <CardTitle>Categorias</CardTitle>
                     <CardDescription>
-                        Explore ou adicione: todas as categorias registradas em
-                        nosso sistema
+                        Uma categoria é um grupo de items ou informações que
+                        compartilham uma característica, tema ou propriedade em
+                        comum. É como uma caixa de sapatos que pode conter
+                        vários pares de sapatos diferentes, todos com um estilo
+                        ou marca específica.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
