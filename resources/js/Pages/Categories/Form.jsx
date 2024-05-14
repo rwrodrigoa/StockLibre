@@ -141,7 +141,7 @@ export default function Form({ auth, category }) {
                                             </DialogTitle>
                                             <DialogDescription>
                                                 Deseja realmente remover a
-                                                categoria {category.name}?
+                                                categoria "{category.name}"?
                                                 Isso irá eliminar todos os
                                                 conteúdos e produtos associados
                                                 à essa categoria. Confirme se

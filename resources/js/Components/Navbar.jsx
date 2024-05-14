@@ -20,7 +20,7 @@ export default function Navbar({ user }) {
             </Link>
             <div className="flex items-center gap-6">
                 <Link href={route('categories.index')}>Categorias</Link>
-                <Link href="#">Fornecedores</Link>
+                <Link href={route('suppliers.index')}>Fornecedores</Link>
                 <Link href="#">Produtos</Link>
                 <Link href="#">Logística</Link>
                 <DropdownMenu>
