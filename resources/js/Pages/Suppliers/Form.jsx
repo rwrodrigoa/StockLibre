@@ -174,7 +174,7 @@ export default function Form({ auth, supplier }) {
                                 <Label htmlFor="email">E-mail</Label>
                                 <Input
                                     id="email"
-                                    type="text"
+                                    type="email"
                                     name="email"
                                     value={data.email}
                                     className="block w-full mt-1"
