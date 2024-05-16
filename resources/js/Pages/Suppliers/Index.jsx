@@ -65,12 +65,12 @@ export default function Index({ auth, suppliers, filter }) {
                 </CardHeader>
                 <CardContent>
                     <div className="flex items-center justify-between w-full space-x-2 align-middle">
-                        <form onSubmit={submit}>
+                        <form onSubmit={submit} className="w-full">
                             <Input
                                 className="max-w-sm"
                                 id="search"
                                 type="text"
-                                placeholder="Pesquisar"
+                                placeholder="Pesquisar (nome, cnpj, endereço, telefone ou e-mail)"
                                 name="search"
                                 ref={searchInput}
                                 value={data.search}
@@ -94,6 +94,7 @@ export default function Index({ auth, suppliers, filter }) {
                                     Nome
                                 </TableHead>
                                 <TableHead>CNPJ</TableHead>
+                                <TableHead>Endereço</TableHead>
                                 <TableHead>Telefone</TableHead>
                                 <TableHead>E-mail</TableHead>
                                 <TableHead className="text-right">
@@ -112,6 +113,7 @@ export default function Index({ auth, suppliers, filter }) {
                                         {suppliers.name}
                                     </TableCell>
                                     <TableCell>{suppliers.document}</TableCell>
+                                    <TableCell>{suppliers.address}</TableCell>
                                     <TableCell>{suppliers.phone}</TableCell>
                                     <TableCell>{suppliers.email}</TableCell>
                                     <TableCell className="text-right">

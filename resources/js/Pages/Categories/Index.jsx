@@ -63,12 +63,12 @@ export default function Index({ auth, categories, filter }) {
                 </CardHeader>
                 <CardContent>
                     <div className="flex items-center justify-between w-full space-x-2 align-middle">
-                        <form onSubmit={submit}>
+                        <form onSubmit={submit} className="w-full">
                             <Input
                                 className="max-w-sm"
                                 id="search"
                                 type="text"
-                                placeholder="Pesquisar"
+                                placeholder="Pesquisar (nome ou descrição) "
                                 name="search"
                                 ref={searchInput}
                                 value={data.search}

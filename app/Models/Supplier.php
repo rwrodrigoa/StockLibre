@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Supplier extends Model
 {
@@ -26,13 +27,17 @@ class Supplier extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+
     public function scopeFilter(Builder $query, array $filters): Builder
     {
         return $query->when(
             $filters['search'] ?? false,
             fn($query, $value) => $query
                 ->where('name', 'like', '%'.$value.'%')
-                ->orWhere('description', 'like', '%'.$value.'%')
                 ->orWhere('document', 'like', '%'.$value.'%')
                 ->orWhere('address', 'like', '%'.$value.'%')
                 ->orWhere('phone', 'like', '%'.$value.'%')
