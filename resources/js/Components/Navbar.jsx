@@ -23,6 +23,7 @@ export default function Navbar({ user }) {
                 <Link href={route('suppliers.index')}>Fornecedores</Link>
                 <Link href="#">Produtos</Link>
                 <Link href="#">Logística</Link>
+                <Link href="#">Histórico</Link>
                 <DropdownMenu>
                     <DropdownMenuTrigger>Usuário</DropdownMenuTrigger>
                     <DropdownMenuContent>

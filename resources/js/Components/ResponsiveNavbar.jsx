@@ -49,6 +49,7 @@ export default function ResponsiveNavbar({ user }) {
                             <Link href={route('suppliers.index')}>Fornecedores</Link>
                             <Link href="#">Produtos</Link>
                             <Link href="#">Logística</Link>
+                            <Link href="#">Histórico</Link>
                             <Link href={route("profile.edit")}>Perfil</Link>
                             <Link
                                 href={route("logout")}
