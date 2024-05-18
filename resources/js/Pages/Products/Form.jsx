@@ -35,6 +35,13 @@ import {
     SelectValue,
 } from "@/Components/ui/select";
 
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/Components/ui/tooltip";
+
 export default function Form({ auth, product, categories, suppliers }) {
     const { toast } = useToast();
     const { data, setData, post, patch, processing, errors } = useForm({
@@ -106,16 +113,26 @@ export default function Form({ auth, product, categories, suppliers }) {
                     <CardTitle className="flex items-center justify-between">
                         <div>{product ? "Editar " : "Adicionar"} produto</div>
                         {product && (
-                            <div>
-                                <a
-                                    target="_blank"
-                                    href={route("products.label", product)}
-                                >
-                                    <Button size="sm" variant="outline">
-                                        <Barcode />
-                                    </Button>
-                                </a>
-                            </div>
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <a
+                                            target="_blank"
+                                            href={route(
+                                                "products.label",
+                                                product
+                                            )}
+                                        >
+                                            <Button size="sm" variant="outline">
+                                                <Barcode />
+                                            </Button>
+                                        </a>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>Gerar etiqueta do produto</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
                         )}
                     </CardTitle>
                     <CardDescription>

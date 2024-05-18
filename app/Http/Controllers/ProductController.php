@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Picqer\Barcode\BarcodeGeneratorHTML;
 
 class ProductController extends Controller
 {
@@ -134,8 +135,14 @@ class ProductController extends Controller
 
     public function label(Product $product)
     {
-        $labelSize = array(0, 0, 300, 82);
-        $pdf = Pdf::loadView('pdfs.product_label', compact('product'))->setPaper($labelSize);
-        return $pdf->download('Etiqueta '. $product->name .'.pdf');
+        $product->price = number_format($product->price,2,",",".");
+        $labelSize = array(0, 0, 250, 80);
+        $generator = new BarcodeGeneratorHTML();
+        $barcode = $generator->getBarcode($product->code, $generator::TYPE_CODE_128);
+        $pdf = Pdf::loadView('pdfs.product_label', [
+            'product' => $product,
+            'barcode' => $barcode,
+        ])->setPaper($labelSize);
+        return $pdf->stream('Etiqueta '. $product->name .'.pdf');
     }
 }
