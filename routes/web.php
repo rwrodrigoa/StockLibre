@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Foundation\Application;
@@ -40,6 +41,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('categories', CategoryController::class)->except('show');
     Route::resource('suppliers', SupplierController::class)->except('show');
+    Route::post('products/{product}/update', [ProductController::class, 'update'])->name('products.update');
+    Route::resource('products', ProductController::class)->except('show', 'update');
 });
 
 require __DIR__.'/auth.php';

@@ -24,7 +24,7 @@ import {
 import TablePagination from "@/Components/TablePagination";
 import { useEffect, useRef } from "react";
 
-export default function Index({ auth, suppliers, filter }) {
+export default function Index({ auth, products, filter }) {
     const searchInput = useRef();
 
     useEffect(() => {
@@ -38,29 +38,26 @@ export default function Index({ auth, suppliers, filter }) {
     const submit = (e) => {
         e.preventDefault();
 
-        get(route("suppliers.index"), {
+        get(route("products.index"), {
             preserveScroll: true,
         });
     };
 
     function navigateEdit(supplier) {
-        router.visit(route("suppliers.edit", supplier));
+        router.visit(route("products.edit", supplier));
     }
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="Fornecedores" />
+            <Head title="Produtos" />
             <Card>
                 <CardHeader>
-                    <CardTitle>Fornecedores</CardTitle>
+                    <CardTitle>Produtos</CardTitle>
                     <CardDescription>
-                        Um fornecedor, também conhecido como provedor ou
-                        supplier, é uma empresa ou indivíduo que fornece
-                        produtos ou serviços a outra empresa, organismo ou
-                        indivíduo. É responsável por produzir, manusear e
-                        entregar os materiais ou serviços necessários para que
-                        você possa realizar suas atividades ou produzir
-                        seus produtos.
+                        Um produto é qualquer artigo ou item criado para atender
+                        às necessidades humanas, seja para consumo pessoal ou
+                        industrial. Pode ser tangível (ou seja, físico) ou
+                        intangível (ou seja, não físico).
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -70,7 +67,7 @@ export default function Index({ auth, suppliers, filter }) {
                                 className="max-w-sm"
                                 id="search"
                                 type="text"
-                                placeholder="Pesquisar (nome, cnpj, endereço, telefone ou e-mail)"
+                                placeholder="Pesquisar (código, nome, descrição, localização)"
                                 name="search"
                                 ref={searchInput}
                                 value={data.search}
@@ -80,7 +77,7 @@ export default function Index({ auth, suppliers, filter }) {
                             />
                         </form>
                         <div>
-                            <Link href={route("suppliers.create")}>
+                            <Link href={route("products.create")}>
                                 <Button variant="outline" size="icon">
                                     <Plus />
                                 </Button>
@@ -90,36 +87,41 @@ export default function Index({ auth, suppliers, filter }) {
                     <Table className="mt-5">
                         <TableHeader>
                             <TableRow>
-                                <TableHead className="w-[100px]">
-                                    Nome
-                                </TableHead>
-                                <TableHead>CNPJ</TableHead>
-                                <TableHead>Endereço</TableHead>
-                                <TableHead>Telefone</TableHead>
-                                <TableHead>E-mail</TableHead>
+                                <TableHead>Imagem</TableHead>
+                                <TableHead>Código</TableHead>
+                                <TableHead>Nome</TableHead>
+                                <TableHead>Quantidade</TableHead>
+                                <TableHead>Localização</TableHead>
+                                <TableHead>Categoria</TableHead>
                                 <TableHead className="text-right">
-                                    Data
+                                    Medidas
                                 </TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {suppliers.data.map((supplier) => (
+                            {products.data.map((product) => (
                                 <TableRow
                                     className="cursor-pointer"
-                                    key={supplier.id}
-                                    onClick={() => navigateEdit(supplier)}
+                                    key={product.id}
+                                    onClick={() => navigateEdit(product)}
                                 >
-                                    <TableCell className="font-medium">
-                                        {supplier.name}
+                                    <TableCell className="max-w-14">
+                                        <img
+                                            className="object-contain rounded-full h-14 "
+                                            src={`/storage/${product.image_url}`}
+                                        />
                                     </TableCell>
-                                    <TableCell>{supplier.document}</TableCell>
-                                    <TableCell>{supplier.address}</TableCell>
-                                    <TableCell>{supplier.phone}</TableCell>
-                                    <TableCell>{supplier.email}</TableCell>
+                                    <TableCell className="font-medium">
+                                        {product.code}
+                                    </TableCell>
+                                    <TableCell>{product.name}</TableCell>
+                                    <TableCell>{product.quantity}</TableCell>
+                                    <TableCell>{product.location}</TableCell>
+                                    <TableCell>
+                                        {product.category.name}
+                                    </TableCell>
                                     <TableCell className="text-right">
-                                        {new Date(
-                                            supplier.created_at
-                                        ).toLocaleDateString()}
+                                        {product.weight}
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -127,7 +129,7 @@ export default function Index({ auth, suppliers, filter }) {
                     </Table>
                 </CardContent>
                 <CardFooter>
-                    <TablePagination links={suppliers.links} />
+                    <TablePagination links={products.links} />
                 </CardFooter>
             </Card>
         </AuthenticatedLayout>

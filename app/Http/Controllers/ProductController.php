@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -11,7 +13,7 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $products = Product::where('user_id', $request->user()->id)->filter($request->only(['search']))->orderBy('name')->paginate(15);
+        $products = Product::where('user_id', $request->user()->id)->filter($request->only(['search']))->orderBy('name')->with(['category', 'supplier'])->paginate(15);
 
         return Inertia::render('Products/Index', [
             'products' => $products,
@@ -19,9 +21,14 @@ class ProductController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return Inertia::render('Products/Form');
+        $categories = Category::where('user_id', $request->user()->id)->orderBy('name')->get();
+        $suppliers = Supplier::where('user_id', $request->user()->id)->orderBy('name')->get();
+        return Inertia::render('Products/Form', [
+            'categories' => $categories,
+            'suppliers' => $suppliers,
+        ]);
     }
 
     public function store(Request $request)
@@ -31,15 +38,15 @@ class ProductController extends Controller
             'name' => 'required|string|max:100',
             'description' => 'nullable|string',
             'price' => 'nullable|decimal:10,2',
-            'quantity' => 'nullable|numeric|min:0',
-            'minimum' => 'nullable|numeric|min:0',
+            'quantity' => 'required|numeric|min:0',
+            'minimum' => 'required|numeric|min:0',
             'location' => 'nullable|string|max:100',
             'weight' => 'nullable|decimal:10,2',
             'length' => 'nullable|decimal:10,2',
             'width' => 'nullable|decimal:10,2',
             'height' => 'nullable|decimal:10,2',
             'category_id' => 'required|exists:categories,id',
-            'supplier_id' => 'required|exists:suppliers,id',
+            'supplier_id' => 'nullable|exists:suppliers,id',
         ]);
 
         if ($request->hasFile('image_url')) {
@@ -63,10 +70,14 @@ class ProductController extends Controller
         return redirect(route('products.index'));
     }
 
-    public function edit(Product $product)
+    public function edit(Request $request, Product $product)
     {
+        $categories = Category::where('user_id', $request->user()->id)->orderBy('name')->get();
+        $suppliers = Supplier::where('user_id', $request->user()->id)->orderBy('name')->get();
         return Inertia::render('Products/Form', [
-            'product' => $product
+            'product' => $product,
+            'categories' => $categories,
+            'suppliers' => $suppliers,
         ]);
     }
 
@@ -77,15 +88,15 @@ class ProductController extends Controller
             'name' => 'required|string|max:100',
             'description' => 'nullable|string',
             'price' => 'nullable|decimal:10,2',
-            'quantity' => 'nullable|numeric|min:0',
-            'minimum' => 'nullable|numeric|min:0',
+            'quantity' => 'required|numeric|min:0',
+            'minimum' => 'required|numeric|min:0',
             'location' => 'nullable|string|max:100',
             'weight' => 'nullable|decimal:10,2',
             'length' => 'nullable|decimal:10,2',
             'width' => 'nullable|decimal:10,2',
             'height' => 'nullable|decimal:10,2',
             'category_id' => 'required|exists:categories,id',
-            'supplier_id' => 'required|exists:suppliers,id',
+            'supplier_id' => 'nullable|exists:suppliers,id',
         ]);
 
         if ($request->hasFile('image_url')) {

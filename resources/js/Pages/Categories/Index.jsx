@@ -88,9 +88,7 @@ export default function Index({ auth, categories, filter }) {
                     <Table className="mt-5">
                         <TableHeader>
                             <TableRow>
-                                <TableHead className="w-[100px]">
-                                    Nome
-                                </TableHead>
+                                <TableHead>Nome</TableHead>
                                 <TableHead>Descrição</TableHead>
                                 <TableHead className="text-right">
                                     Data

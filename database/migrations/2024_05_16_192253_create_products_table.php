@@ -24,7 +24,7 @@ return new class extends Migration
             $table->decimal('height', 10, 2)->nullable();
             $table->foreignUuid('user_id')->constrained()->onDelete('cascade');
             $table->foreignUuid('category_id')->constrained()->onDelete('cascade');
-            $table->foreignUuid('supplier_id')->constrained()->onDelete('cascade');
+            $table->foreignUuid('supplier_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }
