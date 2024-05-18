@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('categories', CategoryController::class)->except('show');
     Route::resource('suppliers', SupplierController::class)->except('show');
     Route::post('products/{product}/update', [ProductController::class, 'update'])->name('products.update');
+    Route::get('products/{product}/label', [ProductController::class, 'label'])->name('products.label');
     Route::resource('products', ProductController::class)->except('show', 'update');
 });
 

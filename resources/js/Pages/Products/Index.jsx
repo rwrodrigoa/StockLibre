@@ -3,6 +3,9 @@ import { Head, Link, router, useForm } from "@inertiajs/react";
 import { Plus } from "lucide-react";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
+import TablePagination from "@/Components/TablePagination";
+import { useEffect, useRef } from "react";
+import { Badge } from "@/Components/ui/badge";
 
 import {
     Card,
@@ -21,8 +24,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/Components/ui/table";
-import TablePagination from "@/Components/TablePagination";
-import { useEffect, useRef } from "react";
 
 export default function Index({ auth, products, filter }) {
     const searchInput = useRef();
@@ -112,16 +113,54 @@ export default function Index({ auth, products, filter }) {
                                         />
                                     </TableCell>
                                     <TableCell className="font-medium">
-                                        {product.code}
+                                        <Badge variant="outline">
+                                            {product.code}
+                                        </Badge>
                                     </TableCell>
                                     <TableCell>{product.name}</TableCell>
-                                    <TableCell>{product.quantity}</TableCell>
+                                    <TableCell>
+                                        <Badge
+                                            variant={
+                                                product.quantity >
+                                                product.minimum
+                                                    ? "default"
+                                                    : "destructive"
+                                            }
+                                        >
+                                            {product.quantity}
+                                        </Badge>
+                                    </TableCell>
                                     <TableCell>{product.location}</TableCell>
                                     <TableCell>
                                         {product.category.name}
                                     </TableCell>
                                     <TableCell className="text-right">
-                                        {product.weight}
+                                        {`
+                                        ${
+                                            product.length !== undefined &&
+                                            product.length
+                                                ? `${product.length} cm, `
+                                                : ""
+                                        }
+                                        ${
+                                            product.height !== undefined &&
+                                            product.height
+                                                ? `${product.height} cm, `
+                                                : ""
+                                        }
+                                        ${
+                                            product.width !== undefined &&
+                                            product.width
+                                                ? `${product.width} cm, `
+                                                : ""
+                                        }
+                                        ${
+                                            product.weight !== undefined &&
+                                            product.weight
+                                                ? `${product.weight} Kg`
+                                                : ""
+                                        }
+                                        `}
                                     </TableCell>
                                 </TableRow>
                             ))}

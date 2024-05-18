@@ -8,6 +8,7 @@ use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProductController extends Controller
 {
@@ -37,14 +38,14 @@ class ProductController extends Controller
             'code' => 'required|string|max:20',
             'name' => 'required|string|max:100',
             'description' => 'nullable|string',
-            'price' => 'nullable|decimal:10,2',
+            'price' => 'nullable|numeric',
             'quantity' => 'required|numeric|min:0',
             'minimum' => 'required|numeric|min:0',
             'location' => 'nullable|string|max:100',
-            'weight' => 'nullable|decimal:10,2',
-            'length' => 'nullable|decimal:10,2',
-            'width' => 'nullable|decimal:10,2',
-            'height' => 'nullable|decimal:10,2',
+            'weight' => 'nullable|numeric',
+            'length' => 'nullable|numeric',
+            'width' => 'nullable|numeric',
+            'height' => 'nullable|numeric',
             'category_id' => 'required|exists:categories,id',
             'supplier_id' => 'nullable|exists:suppliers,id',
         ]);
@@ -87,14 +88,14 @@ class ProductController extends Controller
             'code' => 'required|string|max:20',
             'name' => 'required|string|max:100',
             'description' => 'nullable|string',
-            'price' => 'nullable|decimal:10,2',
+            'price' => 'nullable|numeric',
             'quantity' => 'required|numeric|min:0',
             'minimum' => 'required|numeric|min:0',
             'location' => 'nullable|string|max:100',
-            'weight' => 'nullable|decimal:10,2',
-            'length' => 'nullable|decimal:10,2',
-            'width' => 'nullable|decimal:10,2',
-            'height' => 'nullable|decimal:10,2',
+            'weight' => 'nullable|numeric',
+            'length' => 'nullable|numeric',
+            'width' => 'nullable|numeric',
+            'height' => 'nullable|numeric',
             'category_id' => 'required|exists:categories,id',
             'supplier_id' => 'nullable|exists:suppliers,id',
         ]);
@@ -123,7 +124,18 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        if ($product->image_url != null && $product->image_url != '') {
+            Storage::disk('public')->delete($product->image_url);
+        }
+
         $product->delete();
         return redirect(route('products.index'));
+    }
+
+    public function label(Product $product)
+    {
+        $labelSize = array(0, 0, 300, 82);
+        $pdf = Pdf::loadView('pdfs.product_label', compact('product'))->setPaper($labelSize);
+        return $pdf->download('Etiqueta '. $product->name .'.pdf');
     }
 }

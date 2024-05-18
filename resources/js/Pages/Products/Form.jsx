@@ -6,7 +6,7 @@ import { Label } from "@/Components/ui/label";
 import { Input } from "@/Components/ui/input";
 import InputError from "@/Components/InputError";
 import { Button } from "@/Components/ui/button";
-import { Check, LogIn } from "lucide-react";
+import { Barcode, Check, LogIn } from "lucide-react";
 
 import {
     Card,
@@ -103,8 +103,20 @@ export default function Form({ auth, product, categories, suppliers }) {
             <Head title="Produto" />
             <Card>
                 <CardHeader>
-                    <CardTitle>
-                        {product ? "Editar " : "Adicionar"} produto
+                    <CardTitle className="flex items-center justify-between">
+                        <div>{product ? "Editar " : "Adicionar"} produto</div>
+                        {product && (
+                            <div>
+                                <a
+                                    target="_blank"
+                                    href={route("products.label", product)}
+                                >
+                                    <Button size="sm" variant="outline">
+                                        <Barcode />
+                                    </Button>
+                                </a>
+                            </div>
+                        )}
                     </CardTitle>
                     <CardDescription>
                         Estas são as informações que precisamos saber para
@@ -447,10 +459,13 @@ export default function Form({ auth, product, categories, suppliers }) {
                             <Button disabled={processing}>Salvar</Button>
                         </div>
                     </form>
-                    {product.image_url && (
+                    {product?.image_url && (
                         <div className="flex flex-col items-center">
-                            <hr className="w-full my-5"  />
-                            <img className="rounded-lg max-h-72" src={`/storage/${product.image_url}`} />
+                            <hr className="w-full my-5" />
+                            <img
+                                className="rounded-lg max-h-72"
+                                src={`/storage/${product.image_url}`}
+                            />
                         </div>
                     )}
                 </CardContent>
