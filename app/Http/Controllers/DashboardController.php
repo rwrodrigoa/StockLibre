@@ -20,9 +20,14 @@ class DashboardController extends Controller
 
         $reverify = $request->user()->company->reverify < now();
 
+        $outStockProducts = Product::where('user_id', $request->user()->id)->whereColumn('quantity', '<=', 'minimum')->with(['supplier'])->get();
+
+        //dd($outStockProducts);
+
         return Inertia::render('Dashboard', [
             'sums' => $sums,
             'reverify' => $reverify,
+            'outStockProducts' => $outStockProducts,
         ]);
     }
 }

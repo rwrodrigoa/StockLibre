@@ -1,8 +1,18 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, useForm, usePage } from "@inertiajs/react";
+import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import { Badge } from "@/Components/ui/badge";
-import { Check, FileBox, Package, Tags, UserRoundCheck } from "lucide-react";
-
+import {
+    Check,
+    FileBox,
+    Mail,
+    Package,
+    Phone,
+    Tags,
+    UserRoundCheck,
+} from "lucide-react";
+import { useToast } from "@/Components/ui/use-toast";
+import moment from "moment";
+import { Button } from "@/Components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
 
 import {
@@ -12,11 +22,17 @@ import {
     CardHeader,
     CardTitle,
 } from "@/Components/ui/card";
-import { useToast } from "@/Components/ui/use-toast";
-import moment from "moment";
-import { Button } from "@/Components/ui/button";
 
-export default function Dashboard({ auth, sums, reverify }) {
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/Components/ui/table";
+
+export default function Dashboard({ auth, sums, reverify, outStockProducts }) {
     const { toast } = useToast();
     const user = usePage().props.auth.user;
 
@@ -143,6 +159,87 @@ export default function Dashboard({ auth, sums, reverify }) {
                     </CardContent>
                 </Card>
             </div>
+
+            {outStockProducts && (
+                <Card className="my-4">
+                    <CardHeader>
+                        <CardTitle>Produtos com estoque baixo</CardTitle>
+                        <CardDescription>
+                            Produtos que a quantidade em estoque está abaixo do
+                            mínimo configurado.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <Table className="mt-5">
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Código</TableHead>
+                                    <TableHead>Nome</TableHead>
+                                    <TableHead>Quantidade</TableHead>
+                                    <TableHead>Fornecedor</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {outStockProducts.map((product) => (
+                                    <TableRow key={product.id}>
+                                        <TableCell className="font-medium">
+                                            <Badge variant="outline">
+                                                {product.code}
+                                            </Badge>
+                                        </TableCell>
+                                        <TableCell>{product.name}</TableCell>
+                                        <TableCell>
+                                            <Badge
+                                                variant={
+                                                    product.quantity >
+                                                    product.minimum
+                                                        ? "default"
+                                                        : "destructive"
+                                                }
+                                            >
+                                                {product.quantity}
+                                            </Badge>
+                                        </TableCell>
+                                        <TableCell>
+                                            {product.supplier?.name}
+                                        </TableCell>
+
+                                        <TableCell className="flex justify-end gap-2">
+                                            {product.supplier?.email && (
+                                                <a
+                                                    href={`mailto:${product.supplier?.email}`}
+                                                >
+                                                    <Button
+                                                        size="sm"
+                                                        variant="outline"
+                                                    >
+                                                        <Mail className="w-4 h-4" />
+                                                    </Button>
+                                                </a>
+                                            )}
+                                            {product.supplier?.phone && (
+                                                <a
+                                                    href={`tel:+55${product.supplier?.phone.replace(
+                                                        /[-()\s]/g,
+                                                        ""
+                                                    )}`}
+                                                >
+                                                    <Button
+                                                        size="sm"
+                                                        variant="outline"
+                                                    >
+                                                        <Phone className="w-4 h-4" />
+                                                    </Button>
+                                                </a>
+                                            )}
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </CardContent>
+                </Card>
+            )}
 
             <Card className="my-4">
                 <CardHeader>
