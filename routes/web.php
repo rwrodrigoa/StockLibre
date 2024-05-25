@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HistoricController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupplierController;
@@ -43,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::post('products/{product}/update', [ProductController::class, 'update'])->name('products.update');
     Route::get('products/{product}/label', [ProductController::class, 'label'])->name('products.label');
     Route::resource('products', ProductController::class)->except('show', 'update');
+    Route::resource('historics', HistoricController::class)->except('show');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

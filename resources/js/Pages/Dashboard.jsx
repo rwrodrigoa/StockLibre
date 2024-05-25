@@ -1,18 +1,50 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, useForm, usePage } from "@inertiajs/react";
 import { Badge } from "@/Components/ui/badge";
-import { Package, Tags, UserRoundCheck } from "lucide-react";
+import { Check, FileBox, Package, Tags, UserRoundCheck } from "lucide-react";
+
+import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
 
 import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/Components/ui/card";
+import { useToast } from "@/Components/ui/use-toast";
+import moment from "moment";
+import { Button } from "@/Components/ui/button";
 
-export default function Dashboard({ auth, sums }) {
+export default function Dashboard({ auth, sums, reverify }) {
+    const { toast } = useToast();
+    const user = usePage().props.auth.user;
+
+    const { data, setData, post, errors, processing } = useForm({
+        name: user.company.name,
+        document: user.company.document,
+        reverify: moment(user.company.reverify)
+            .add(3, "months")
+            .format("YYYY-MM-DD"),
+    });
+
+    const submit = (e) => {
+        e.preventDefault();
+
+        post(route("company.update"), {
+            onSuccess: () => {
+                toast({
+                    description: (
+                        <div className="flex items-center gap-3 align-middle">
+                            <Check />
+                            <span>Informações salvas.</span>
+                        </div>
+                    ),
+                });
+            },
+        });
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -23,6 +55,26 @@ export default function Dashboard({ auth, sums }) {
             }
         >
             <Head title="Dashboard" />
+
+            {reverify && (
+                <Alert className="mb-4">
+                    <FileBox className="w-4 h-4" />
+                    <AlertTitle>Atenção: Recontagem de Estoque</AlertTitle>
+                    <AlertDescription>
+                        O grande dia da recontagem de estoque chegou!
+                        Certifique-se de que todos os itens estão contabilizados
+                        corretamente.
+                    </AlertDescription>
+                    <form
+                        className="flex items-end justify-end w-full"
+                        onSubmit={submit}
+                    >
+                        <Button size="sm" disabled={processing}>
+                            Já efetuei
+                        </Button>
+                    </form>
+                </Alert>
+            )}
 
             <Card className="mb-4">
                 <CardHeader>
@@ -97,16 +149,14 @@ export default function Dashboard({ auth, sums }) {
                     <CardTitle>Últimas movimentações</CardTitle>
                     <CardDescription>
                         Nesta seção, vamos lhe dar um panorama geral de tudo o
-                        que está acontecendo em seu estoque. Você vai
-                        descobrir o que fez, quando e (quase) por quê. É
-                        como ter um assistente pessoal de estoque sempre à
-                        disposição – sem os intervalos de café e queixas sobre a
-                        bagunça do estoque (estamos trabalhando nisso).
+                        que está acontecendo em seu estoque. Você vai descobrir
+                        o que fez, quando e (quase) por quê. É como ter um
+                        assistente pessoal de estoque sempre à disposição – sem
+                        os intervalos de café e queixas sobre a bagunça do
+                        estoque (estamos trabalhando nisso).
                     </CardDescription>
                 </CardHeader>
-                <CardContent>
-
-                </CardContent>
+                <CardContent></CardContent>
             </Card>
         </AuthenticatedLayout>
     );

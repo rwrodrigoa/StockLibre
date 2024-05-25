@@ -18,8 +18,11 @@ class DashboardController extends Controller
         $sums['sum_products_ok'] = Product::where('user_id', $request->user()->id)->whereColumn('quantity', '>', 'minimum')->get()->count();
         $sums['sum_products_minimum'] = Product::where('user_id', $request->user()->id)->whereColumn('quantity', '<=', 'minimum')->get()->count();
 
+        $reverify = $request->user()->company->reverify < now();
+
         return Inertia::render('Dashboard', [
             'sums' => $sums,
+            'reverify' => $reverify,
         ]);
     }
 }

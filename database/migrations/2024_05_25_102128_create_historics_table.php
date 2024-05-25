@@ -10,7 +10,6 @@ return new class extends Migration {
     {
         Schema::create('historics', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->date('date')->default(now());
             $table->integer('quantity')->default(1);
             $table->string('type');
             $table->text('description')->nullable();

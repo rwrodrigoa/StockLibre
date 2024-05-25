@@ -19,11 +19,11 @@ export default function Navbar({ user }) {
                 <h1 className="font-bold uppercase">StockLibre</h1>
             </Link>
             <div className="flex items-center gap-6">
-                <Link href={route('categories.index')}>Categorias</Link>
-                <Link href={route('suppliers.index')}>Fornecedores</Link>
-                <Link href={route('products.index')}>Produtos</Link>
+                <Link href={route("categories.index")}>Categorias</Link>
+                <Link href={route("suppliers.index")}>Fornecedores</Link>
+                <Link href={route("products.index")}>Produtos</Link>
                 <Link href="#">Logística</Link>
-                <Link href="#">Histórico</Link>
+                <Link href={route("historics.index")}>Histórico</Link>
                 <DropdownMenu>
                     <DropdownMenuTrigger>Usuário</DropdownMenuTrigger>
                     <DropdownMenuContent>

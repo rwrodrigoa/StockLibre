@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,6 @@ class Historic extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'date',
         'quantity',
         'type',
         'description',
@@ -39,17 +39,24 @@ class Historic extends Model
 
     public function scopeFilter(Builder $query, array $filters): Builder
     {
-        return $query->when(
-            $filters['search'] ?? false,
-            function ($query, $value) {
-                $query->where('type', 'like', '%' . $value . '%')
-                    ->orWhereHas('product', function ($query) use ($value) {
-                        $query->where('name', 'like', '%' . $value . '%');
-                    })
-                    ->orWhereHas('supplier', function ($query) use ($value) {
-                        $query->where('name', 'like', '%' . $value . '%');
-                    });
-            }
-        );
+        return $query
+            ->when(
+                $filters['search'] ?? false,
+                function ($query, $value) {
+                    $query->where('type', 'like', '%' . $value . '%')
+                        ->orWhereHas('product', function ($query) use ($value) {
+                            $query->where('name', 'like', '%' . $value . '%');
+                        })
+                        ->orWhereHas('supplier', function ($query) use ($value) {
+                            $query->where('name', 'like', '%' . $value . '%');
+                        });
+                }
+            )->when(
+                $filters['date'] ?? false,
+                function ($query, $date) {
+                    $formattedDate = Carbon::parse($date)->format('Y-m-d');
+                    $query->whereDate('created_at', $formattedDate);
+                }
+            );
     }
 }
