@@ -24,12 +24,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return redirect(route('dashboard'));
 });
 
 Route::middleware('auth')->group(function () {
@@ -44,7 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::post('products/{product}/update', [ProductController::class, 'update'])->name('products.update');
     Route::get('products/{product}/label', [ProductController::class, 'label'])->name('products.label');
     Route::resource('products', ProductController::class)->except('show', 'update');
-    Route::resource('historics', HistoricController::class)->except('show');
+    Route::resource('historics', HistoricController::class)->except('show', 'edit', 'update', 'destroy');
 });
 
 require __DIR__ . '/auth.php';

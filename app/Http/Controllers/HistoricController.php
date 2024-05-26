@@ -12,7 +12,7 @@ class HistoricController extends Controller
     {
         $this->authorize('viewAny', Historic::class);
 
-        $historics = Historic::where('user_id', $request->user()->id)->filter($request->only(['search', 'date']))->orderBy('date')->with(['product', 'supplier'])->paginate(15);
+        $historics = Historic::where('user_id', $request->user()->id)->filter($request->only(['search', 'date']))->orderBy('date')->with(['product'])->paginate(15);
 
         return Inertia::render('Historics/Index', [
             'historics' => $historics,
@@ -22,30 +22,10 @@ class HistoricController extends Controller
 
     public function create()
     {
-        //
+        return Inertia::render('Historics/Form');
     }
 
     public function store(Request $request)
-    {
-        //
-    }
-
-    public function show(Historic $historic)
-    {
-        //
-    }
-
-    public function edit(Historic $historic)
-    {
-        //
-    }
-
-    public function update(Request $request, Historic $historic)
-    {
-        //
-    }
-
-    public function destroy(Historic $historic)
     {
         //
     }

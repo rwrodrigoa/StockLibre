@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Historic;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
@@ -19,15 +20,14 @@ class DashboardController extends Controller
         $sums['sum_products_minimum'] = Product::where('user_id', $request->user()->id)->whereColumn('quantity', '<=', 'minimum')->get()->count();
 
         $reverify = $request->user()->company->reverify < now();
-
         $outStockProducts = Product::where('user_id', $request->user()->id)->whereColumn('quantity', '<=', 'minimum')->with(['supplier'])->get();
-
-        //dd($outStockProducts);
+        $historics = Historic::where('user_id', $request->user()->id)->orderBy('date')->with(['product'])->limit(10)->get();
 
         return Inertia::render('Dashboard', [
             'sums' => $sums,
             'reverify' => $reverify,
             'outStockProducts' => $outStockProducts,
+            'historics' => $historics,
         ]);
     }
 }

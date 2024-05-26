@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router, useForm } from "@inertiajs/react";
-import { Plus } from "lucide-react";
+import { ImageOff, Plus } from "lucide-react";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
 import TablePagination from "@/Components/TablePagination";
@@ -106,11 +106,15 @@ export default function Index({ auth, products, filter }) {
                                     key={product.id}
                                     onClick={() => navigateEdit(product)}
                                 >
-                                    <TableCell className="max-w-14">
-                                        <img
-                                            className="object-contain rounded-full h-14 "
-                                            src={`/storage/${product.image_url}`}
-                                        />
+                                    <TableCell className="flex justify-center max-w-14">
+                                        {product.image_url ? (
+                                            <img
+                                                className="object-contain rounded-full h-14"
+                                                src={`/storage/${product.image_url}`}
+                                            />
+                                        ) : (
+                                            <ImageOff className="object-contain rounded-full h-14" />
+                                        )}
                                     </TableCell>
                                     <TableCell className="font-medium">
                                         <Badge variant="outline">

@@ -98,33 +98,32 @@ export default function Index({ auth, historics, filter }) {
                             <TableRow>
                                 <TableHead>Data</TableHead>
                                 <TableHead>Tipo</TableHead>
-                                <TableHead className="text-right">
-                                    Quantidade
-                                </TableHead>
+                                <TableHead>Quantidade</TableHead>
                                 <TableHead>Produto</TableHead>
-                                <TableHead>Fornecedor</TableHead>
+                                <TableHead>Descrição</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {historics.data.map((historic) => (
-                                <TableRow
-                                    className="cursor-pointer"
-                                    key={historic.id}
-                                >
+                                <TableRow key={historic.id}>
                                     <TableCell className="font-medium">
                                         {new Date(
                                             historic.created_at
                                         ).toLocaleDateString()}
                                     </TableCell>
                                     <TableCell>{historic.type}</TableCell>
-                                    <TableCell className="text-right">
-                                        {historic.quantity}
+                                    <TableCell>
+                                        {historic.quantity > 0
+                                            ? `+${historic.quantity}`
+                                            : historic.quantity}
+                                        &nbsp; ({historic.product.quantity} em
+                                        estoque)
                                     </TableCell>
                                     <TableCell>
                                         {historic.product.name}
                                     </TableCell>
-                                    <TableCell>
-                                        {historic.supplier.name}
+                                    <TableCell className="min-w-52">
+                                        {historic.description}
                                     </TableCell>
                                 </TableRow>
                             ))}

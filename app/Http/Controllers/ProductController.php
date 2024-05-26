@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Historic;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
@@ -64,9 +65,18 @@ class ProductController extends Controller
             $validated['image_url'] = $path;
         }
 
-        Product::create([
+        $product = Product::create([
             ...$validated,
             'user_id' => $request->user()->id
+        ]);
+
+        Historic::create([
+            'quantity' => $product->quantity,
+            'type' => 'Novo produto',
+            'description' => 'Estoque inicial do novo produto no sistema',
+            'product_id' => $product->id,
+            'supplier_id' => $product->supplier?->id,
+            'user_id' => $request->user()->id,
         ]);
 
         return redirect(route('products.index'));
@@ -118,7 +128,21 @@ class ProductController extends Controller
             $validated['image_url'] = $path;
         }
 
+        $oldQuantity = $product->quantity;
+
         $product->update($validated);
+
+
+        if ($product->quantity !== $oldQuantity) {
+            Historic::create([
+                'quantity' => $product->quantity - $oldQuantity,
+                'type' => 'Edição do produto',
+                'description' => 'Ajuste manual no produto no sistema',
+                'product_id' => $product->id,
+                'supplier_id' => $product->supplier?->id,
+                'user_id' => $request->user()->id,
+            ]);
+        }
 
         return redirect(route('products.index'));
     }
@@ -135,7 +159,7 @@ class ProductController extends Controller
 
     public function label(Product $product)
     {
-        $product->price = number_format($product->price,2,",",".");
+        $product->price = number_format($product->price, 2, ",", ".");
         $labelSize = array(0, 0, 250, 80);
         $generator = new BarcodeGeneratorHTML();
         $barcode = $generator->getBarcode($product->code, $generator::TYPE_CODE_128);
@@ -143,6 +167,6 @@ class ProductController extends Controller
             'product' => $product,
             'barcode' => $barcode,
         ])->setPaper($labelSize);
-        return $pdf->stream('Etiqueta '. $product->name .'.pdf');
+        return $pdf->stream('Etiqueta ' . $product->name . '.pdf');
     }
 }

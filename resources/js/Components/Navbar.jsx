@@ -22,7 +22,7 @@ export default function Navbar({ user }) {
                 <Link href={route("categories.index")}>Categorias</Link>
                 <Link href={route("suppliers.index")}>Fornecedores</Link>
                 <Link href={route("products.index")}>Produtos</Link>
-                <Link href="#">Logística</Link>
+                <Link href={route("historics.create")}>Logística</Link>
                 <Link href={route("historics.index")}>Histórico</Link>
                 <DropdownMenu>
                     <DropdownMenuTrigger>Usuário</DropdownMenuTrigger>

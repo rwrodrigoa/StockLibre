@@ -32,7 +32,13 @@ import {
     TableRow,
 } from "@/Components/ui/table";
 
-export default function Dashboard({ auth, sums, reverify, outStockProducts }) {
+export default function Dashboard({
+    auth,
+    sums,
+    reverify,
+    outStockProducts,
+    historics,
+}) {
     const { toast } = useToast();
     const user = usePage().props.auth.user;
 
@@ -253,7 +259,44 @@ export default function Dashboard({ auth, sums, reverify, outStockProducts }) {
                         estoque (estamos trabalhando nisso).
                     </CardDescription>
                 </CardHeader>
-                <CardContent></CardContent>
+                <CardContent>
+                    <Table className="mt-5">
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Data</TableHead>
+                                <TableHead>Tipo</TableHead>
+                                <TableHead>Quantidade</TableHead>
+                                <TableHead>Produto</TableHead>
+                                <TableHead>Descrição</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {historics.map((historic) => (
+                                <TableRow key={historic.id}>
+                                    <TableCell className="font-medium">
+                                        {new Date(
+                                            historic.created_at
+                                        ).toLocaleDateString()}
+                                    </TableCell>
+                                    <TableCell>{historic.type}</TableCell>
+                                    <TableCell>
+                                        {historic.quantity > 0
+                                            ? `+${historic.quantity}`
+                                            : historic.quantity}
+                                        &nbsp; ({historic.product.quantity} em
+                                        estoque)
+                                    </TableCell>
+                                    <TableCell>
+                                        {historic.product.name}
+                                    </TableCell>
+                                    <TableCell className="min-w-52">
+                                        {historic.description}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </CardContent>
             </Card>
         </AuthenticatedLayout>
     );
