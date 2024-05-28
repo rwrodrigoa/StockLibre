@@ -113,19 +113,19 @@ export default function Form({ auth }) {
                                 <Label htmlFor="type">Tipo de operação</Label>
                                 <Select
                                     id="type"
-                                    defaultValue={data.type}
+                                    defaultValue={data.type.toString()}
                                     onValueChange={(e) => {
-                                        setData("type", e);
+                                        setData("type", e === "true");
                                     }}
                                 >
                                     <SelectTrigger className="mt-1">
                                         <SelectValue placeholder="Selecione o tipo" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value={false}>
+                                        <SelectItem value="false">
                                             Retirar do Estoque
                                         </SelectItem>
-                                        <SelectItem value={true}>
+                                        <SelectItem value="true">
                                             Adicionar ao Estoque
                                         </SelectItem>
                                     </SelectContent>
