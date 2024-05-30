@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router, useForm } from "@inertiajs/react";
-import { Plus } from "lucide-react";
+import { FileSpreadsheet, Plus } from "lucide-react";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
 
@@ -21,6 +21,14 @@ import {
     TableHeader,
     TableRow,
 } from "@/Components/ui/table";
+
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/Components/ui/tooltip";
+
 import TablePagination from "@/Components/TablePagination";
 import { useEffect, useRef } from "react";
 
@@ -49,7 +57,23 @@ export default function Index({ auth, historics, filter }) {
             <Head title="Histórico" />
             <Card>
                 <CardHeader>
-                    <CardTitle>Histórico</CardTitle>
+                    <CardTitle className="flex items-center justify-between">
+                        <div>Histórico</div>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <a href={route("historics.export", filter)}>
+                                        <Button size="sm" variant="outline">
+                                            <FileSpreadsheet />
+                                        </Button>
+                                    </a>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Exportar para Excel</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </CardTitle>
                     <CardDescription>
                         Nesta tela, é possível monitorar detalhadamente todo o
                         histórico de movimentações efetuadas no estoque. Isso

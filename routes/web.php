@@ -28,17 +28,24 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::post('/company', [CompanyController::class, 'update'])->name('company.update');
 
     Route::resource('categories', CategoryController::class)->except('show');
+
     Route::resource('suppliers', SupplierController::class)->except('show');
+
     Route::post('products/{product}/update', [ProductController::class, 'update'])->name('products.update');
     Route::get('products/{product}/label', [ProductController::class, 'label'])->name('products.label');
     Route::resource('products', ProductController::class)->except('show', 'update');
+
+    Route::get('historics/export/', [HistoricController::class, 'export'])->name('historics.export');
     Route::resource('historics', HistoricController::class)->except('show', 'edit', 'update', 'destroy');
 });
 

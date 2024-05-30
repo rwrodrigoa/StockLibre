@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\HistoricExport;
 use App\Models\Historic;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HistoricController extends Controller
 {
@@ -63,5 +65,10 @@ class HistoricController extends Controller
         ]);
 
         return redirect()->back();
+    }
+
+    public function export(Request $request)
+    {
+        return Excel::download(new HistoricExport($request->user(), $request->only(['search', 'date'])), 'Histórico.xlsx');
     }
 }
