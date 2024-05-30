@@ -21,7 +21,7 @@ class DashboardController extends Controller
 
         $reverify = $request->user()->company->reverify < now();
         $outStockProducts = Product::where('user_id', $request->user()->id)->whereColumn('quantity', '<=', 'minimum')->with(['supplier'])->get();
-        $historics = Historic::where('user_id', $request->user()->id)->orderBy('date')->with(['product'])->limit(10)->get();
+        $historics = Historic::where('user_id', $request->user()->id)->orderBy('created_at', 'desc')->with(['product'])->limit(10)->get();
 
         return Inertia::render('Dashboard', [
             'sums' => $sums,

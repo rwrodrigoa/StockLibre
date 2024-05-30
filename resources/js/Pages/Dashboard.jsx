@@ -265,7 +265,9 @@ export default function Dashboard({
                             <TableRow>
                                 <TableHead>Data</TableHead>
                                 <TableHead>Tipo</TableHead>
-                                <TableHead>Quantidade</TableHead>
+                                <TableHead className="text-center">
+                                    Quantidade
+                                </TableHead>
                                 <TableHead>Produto</TableHead>
                                 <TableHead>Descrição</TableHead>
                             </TableRow>
@@ -279,12 +281,10 @@ export default function Dashboard({
                                         ).toLocaleDateString()}
                                     </TableCell>
                                     <TableCell>{historic.type}</TableCell>
-                                    <TableCell>
+                                    <TableCell className="text-center">
                                         {historic.quantity > 0
                                             ? `+${historic.quantity}`
                                             : historic.quantity}
-                                        &nbsp; ({historic.product.quantity} em
-                                        estoque)
                                     </TableCell>
                                     <TableCell>
                                         {historic.product.name}

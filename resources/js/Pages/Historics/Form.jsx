@@ -30,7 +30,7 @@ export default function Form({ auth }) {
     const { data, setData, post, patch, processing, errors } = useForm({
         code: "",
         quantity: 1,
-        type: false,
+        type: "Retirar do Estoque",
         description: "",
     });
 
@@ -115,17 +115,17 @@ export default function Form({ auth }) {
                                     id="type"
                                     defaultValue={data.type.toString()}
                                     onValueChange={(e) => {
-                                        setData("type", e === "true");
+                                        setData("type", e);
                                     }}
                                 >
                                     <SelectTrigger className="mt-1">
                                         <SelectValue placeholder="Selecione o tipo" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="false">
+                                        <SelectItem value="Retirar do Estoque">
                                             Retirar do Estoque
                                         </SelectItem>
-                                        <SelectItem value="true">
+                                        <SelectItem value="Adicionar ao Estoque">
                                             Adicionar ao Estoque
                                         </SelectItem>
                                     </SelectContent>
