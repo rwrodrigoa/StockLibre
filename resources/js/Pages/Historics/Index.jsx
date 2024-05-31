@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router, useForm } from "@inertiajs/react";
-import { FileSpreadsheet, Plus } from "lucide-react";
+import { FileSpreadsheet, FileText, Plus } from "lucide-react";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
 
@@ -59,20 +59,46 @@ export default function Index({ auth, historics, filter }) {
                 <CardHeader>
                     <CardTitle className="flex items-center justify-between">
                         <div>Histórico</div>
-                        <TooltipProvider>
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <a href={route("historics.export", filter)}>
-                                        <Button size="sm" variant="outline">
-                                            <FileSpreadsheet />
-                                        </Button>
-                                    </a>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                    <p>Exportar para Excel</p>
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
+                        <div>
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <a
+                                            href={route(
+                                                "historics.export.pdf",
+                                                filter
+                                            )}
+                                        >
+                                            <Button size="sm" variant="outline">
+                                                <FileText />
+                                            </Button>
+                                        </a>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>Exportar para PDF</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <a
+                                            href={route(
+                                                "historics.export.xlsx",
+                                                filter
+                                            )}
+                                        >
+                                            <Button size="sm" variant="outline">
+                                                <FileSpreadsheet />
+                                            </Button>
+                                        </a>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>Exportar para Excel</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
+                        </div>
                     </CardTitle>
                     <CardDescription>
                         Nesta tela, é possível monitorar detalhadamente todo o

@@ -45,7 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::get('products/{product}/label', [ProductController::class, 'label'])->name('products.label');
     Route::resource('products', ProductController::class)->except('show', 'update');
 
-    Route::get('historics/export/', [HistoricController::class, 'export'])->name('historics.export');
+    Route::get('historics/export/xlsx', [HistoricController::class, 'exportXLSX'])->name('historics.export.xlsx');
+    Route::get('historics/export/pdf', [HistoricController::class, 'exportPDF'])->name('historics.export.pdf');
     Route::resource('historics', HistoricController::class)->except('show', 'edit', 'update', 'destroy');
 });
 

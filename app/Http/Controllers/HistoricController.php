@@ -67,8 +67,13 @@ class HistoricController extends Controller
         return redirect()->back();
     }
 
-    public function export(Request $request)
+    public function exportXLSX(Request $request)
     {
-        return Excel::download(new HistoricExport($request->user(), $request->only(['search', 'date'])), 'Histórico.xlsx');
+        return Excel::download(new HistoricExport($request->user(), $request->only(['search', 'date'])), 'Histórico.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+    }
+
+    public function exportPDF(Request $request)
+    {
+        return Excel::download(new HistoricExport($request->user(), $request->only(['search', 'date'])), 'Histórico.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 }
