@@ -1,8 +1,10 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, router, useForm } from "@inertiajs/react";
-import { FileSpreadsheet, FileText, Plus } from "lucide-react";
+import { Head, useForm } from "@inertiajs/react";
+import { FileSpreadsheet, FileText } from "lucide-react";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
+import TablePagination from "@/Components/TablePagination";
+import { useEffect, useRef } from "react";
 
 import {
     Card,
@@ -28,9 +30,6 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/Components/ui/tooltip";
-
-import TablePagination from "@/Components/TablePagination";
-import { useEffect, useRef } from "react";
 
 export default function Index({ auth, historics, filter }) {
     const searchInput = useRef();
@@ -59,7 +58,7 @@ export default function Index({ auth, historics, filter }) {
                 <CardHeader>
                     <CardTitle className="flex items-center justify-between">
                         <div>Histórico</div>
-                        <div>
+                        <div className="flex gap-2">
                             <TooltipProvider>
                                 <Tooltip>
                                     <TooltipTrigger asChild>

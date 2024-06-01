@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CategoryExport;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CategoryController extends Controller
 {
@@ -60,5 +62,15 @@ class CategoryController extends Controller
     {
         $category->delete();
         return redirect(route('categories.index'));
+    }
+
+    public function exportXLSX(Request $request)
+    {
+        return Excel::download(new CategoryExport($request->user(), $request->only(['search'])), 'Categorias.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+    }
+
+    public function exportPDF(Request $request)
+    {
+        return Excel::download(new CategoryExport($request->user(), $request->only(['search'])), 'Categorias.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 }

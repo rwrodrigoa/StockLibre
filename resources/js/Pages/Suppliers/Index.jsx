@@ -1,8 +1,10 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router, useForm } from "@inertiajs/react";
-import { Plus } from "lucide-react";
+import { FileSpreadsheet, FileText, Plus } from "lucide-react";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
+import TablePagination from "@/Components/TablePagination";
+import { useEffect, useRef } from "react";
 
 import {
     Card,
@@ -21,8 +23,13 @@ import {
     TableHeader,
     TableRow,
 } from "@/Components/ui/table";
-import TablePagination from "@/Components/TablePagination";
-import { useEffect, useRef } from "react";
+
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/Components/ui/tooltip";
 
 export default function Index({ auth, suppliers, filter }) {
     const searchInput = useRef();
@@ -52,15 +59,57 @@ export default function Index({ auth, suppliers, filter }) {
             <Head title="Fornecedores" />
             <Card>
                 <CardHeader>
-                    <CardTitle>Fornecedores</CardTitle>
+                    <CardTitle className="flex items-center justify-between">
+                        <div>Fornecedores</div>
+                        <div className="flex gap-2">
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <a
+                                            href={route(
+                                                "suppliers.export.pdf",
+                                                { search: filter }
+                                            )}
+                                        >
+                                            <Button size="sm" variant="outline">
+                                                <FileText />
+                                            </Button>
+                                        </a>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>Exportar para PDF</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <a
+                                            href={route(
+                                                "suppliers.export.xlsx",
+                                                { search: filter }
+                                            )}
+                                        >
+                                            <Button size="sm" variant="outline">
+                                                <FileSpreadsheet />
+                                            </Button>
+                                        </a>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>Exportar para Excel</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
+                        </div>
+                    </CardTitle>
                     <CardDescription>
                         Um fornecedor, também conhecido como provedor ou
                         supplier, é uma empresa ou indivíduo que fornece
                         produtos ou serviços a outra empresa, organismo ou
                         indivíduo. É responsável por produzir, manusear e
                         entregar os materiais ou serviços necessários para que
-                        você possa realizar suas atividades ou produzir
-                        seus produtos.
+                        você possa realizar suas atividades ou produzir seus
+                        produtos.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>

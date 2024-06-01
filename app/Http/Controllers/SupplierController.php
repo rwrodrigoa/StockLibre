@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SupplierExport;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SupplierController extends Controller
 {
@@ -68,5 +70,15 @@ class SupplierController extends Controller
     {
         $supplier->delete();
         return redirect(route('suppliers.index'));
+    }
+
+    public function exportXLSX(Request $request)
+    {
+        return Excel::download(new SupplierExport($request->user(), $request->only(['search'])), 'Fornecedores.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+    }
+
+    public function exportPDF(Request $request)
+    {
+        return Excel::download(new SupplierExport($request->user(), $request->only(['search'])), 'Fornecedores.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 }

@@ -27,7 +27,7 @@ import { useEffect, useRef } from "react";
 
 export default function Form({ auth }) {
     const { toast } = useToast();
-    const { data, setData, post, patch, processing, errors } = useForm({
+    const { data, setData, post, processing, errors, reset } = useForm({
         code: "",
         quantity: 1,
         type: "Retirar do Estoque",
@@ -44,6 +44,7 @@ export default function Form({ auth }) {
         e.preventDefault();
         post(route("historics.store"), {
             onSuccess: () => {
+                reset();
                 toast({
                     description: (
                         <div className="flex items-center gap-3 align-middle">
@@ -52,6 +53,7 @@ export default function Form({ auth }) {
                         </div>
                     ),
                 });
+                codeInput.current.focus();
             },
         });
     };

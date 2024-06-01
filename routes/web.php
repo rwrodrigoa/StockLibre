@@ -37,8 +37,12 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/company', [CompanyController::class, 'update'])->name('company.update');
 
+    Route::get('categories/export/xlsx', [CategoryController::class, 'exportXLSX'])->name('categories.export.xlsx');
+    Route::get('categories/export/pdf', [CategoryController::class, 'exportPDF'])->name('categories.export.pdf');
     Route::resource('categories', CategoryController::class)->except('show');
 
+    Route::get('suppliers/export/xlsx', [SupplierController::class, 'exportXLSX'])->name('suppliers.export.xlsx');
+    Route::get('suppliers/export/pdf', [SupplierController::class, 'exportPDF'])->name('suppliers.export.pdf');
     Route::resource('suppliers', SupplierController::class)->except('show');
 
     Route::post('products/{product}/update', [ProductController::class, 'update'])->name('products.update');
