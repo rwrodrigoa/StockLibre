@@ -18,6 +18,8 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Product::class);
+
         $products = Product::where('user_id', $request->user()->id)->filter($request->only(['search']))->orderBy('name')->with(['category', 'supplier'])->paginate(15);
 
         return Inertia::render('Products/Index', [
@@ -28,6 +30,8 @@ class ProductController extends Controller
 
     public function create(Request $request)
     {
+        $this->authorize('create', Product::class);
+
         $categories = Category::where('user_id', $request->user()->id)->orderBy('name')->get();
         $suppliers = Supplier::where('user_id', $request->user()->id)->orderBy('name')->get();
         return Inertia::render('Products/Form', [
@@ -38,6 +42,8 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('create', Product::class);
+
         $validated = $request->validate([
             'code' => 'required|string|max:20',
             'name' => 'required|string|max:100',
@@ -86,6 +92,8 @@ class ProductController extends Controller
 
     public function edit(Request $request, Product $product)
     {
+        $this->authorize('update', $product);
+
         $categories = Category::where('user_id', $request->user()->id)->orderBy('name')->get();
         $suppliers = Supplier::where('user_id', $request->user()->id)->orderBy('name')->get();
         return Inertia::render('Products/Form', [
@@ -97,6 +105,8 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
+        $this->authorize('update', $product);
+
         $validated = $request->validate([
             'code' => 'required|string|max:20',
             'name' => 'required|string|max:100',
@@ -151,6 +161,8 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        $this->authorize('delete', $product);
+
         if ($product->image_url != null && $product->image_url != '') {
             Storage::disk('public')->delete($product->image_url);
         }

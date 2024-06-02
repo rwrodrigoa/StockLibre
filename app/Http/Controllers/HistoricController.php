@@ -25,11 +25,15 @@ class HistoricController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Historic::class);
+
         return Inertia::render('Historics/Form');
     }
 
     public function store(Request $request)
     {
+        $this->authorize('create', Historic::class);
+
         $validated = $request->validate([
             'quantity' => 'required|integer|numeric|min:1',
             'type' => 'required|string',

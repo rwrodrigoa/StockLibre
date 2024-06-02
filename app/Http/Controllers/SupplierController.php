@@ -13,6 +13,8 @@ class SupplierController extends Controller
 
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Supplier::class);
+
         $suppliers = Supplier::where('user_id', $request->user()->id)->filter($request->only(['search']))->orderBy('name')->paginate(15);
 
         return Inertia::render('Suppliers/Index', [
@@ -23,11 +25,15 @@ class SupplierController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Supplier::class);
+
         return Inertia::render('Suppliers/Form');
     }
 
     public function store(Request $request)
     {
+        $this->authorize('create', Supplier::class);
+
         $validated = $request->validate([
             'name' => 'required|string|max:30',
             'document' => 'nullable|string|max:18',
@@ -46,6 +52,8 @@ class SupplierController extends Controller
 
     public function edit(Supplier $supplier)
     {
+        $this->authorize('update', $supplier);
+
         return Inertia::render('Suppliers/Form', [
             'supplier' => $supplier,
         ]);
@@ -53,6 +61,8 @@ class SupplierController extends Controller
 
     public function update(Request $request, Supplier $supplier)
     {
+        $this->authorize('update', $supplier);
+
         $validated = $request->validate([
             'name' => 'required|string|max:30',
             'document' => 'nullable|string|max:18',
@@ -68,6 +78,8 @@ class SupplierController extends Controller
 
     public function destroy(Supplier $supplier)
     {
+        $this->authorize('delete', $supplier);
+
         $supplier->delete();
         return redirect(route('suppliers.index'));
     }

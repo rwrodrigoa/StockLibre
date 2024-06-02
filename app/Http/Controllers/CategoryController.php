@@ -12,6 +12,8 @@ class CategoryController extends Controller
 {
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Category::class);
+
         $categories = Category::where('user_id', $request->user()->id)->filter($request->only(['search']))->orderBy('name')->paginate(15);
         return Inertia::render('Categories/Index', [
             'categories' => $categories,
@@ -21,11 +23,15 @@ class CategoryController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Category::class);
+
         return Inertia::render('Categories/Form');
     }
 
     public function store(Request $request)
     {
+        $this->authorize('create', Category::class);
+
         $validated = $request->validate([
             'name' => 'required|string|max:30',
             'description' => 'nullable|string'
@@ -41,6 +47,8 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
+        $this->authorize('update', $category);
+
         return Inertia::render('Categories/Form', [
             'category' => $category,
         ]);
@@ -48,6 +56,8 @@ class CategoryController extends Controller
 
     public function update(Request $request, Category $category)
     {
+        $this->authorize('update', $category);
+
         $validated = $request->validate([
             'name' => 'required|string|max:30',
             'description' => 'nullable|string'
@@ -60,6 +70,8 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
+        $this->authorize('delete', $category);
+
         $category->delete();
         return redirect(route('categories.index'));
     }
