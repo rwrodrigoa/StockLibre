@@ -45,6 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::get('suppliers/export/pdf', [SupplierController::class, 'exportPDF'])->name('suppliers.export.pdf');
     Route::resource('suppliers', SupplierController::class)->except('show');
 
+    Route::get('products/export/xlsx', [ProductController::class, 'exportXLSX'])->name('products.export.xlsx');
+    Route::get('products/export/pdf', [ProductController::class, 'exportPDF'])->name('products.export.pdf');
     Route::post('products/{product}/update', [ProductController::class, 'update'])->name('products.update');
     Route::get('products/{product}/label', [ProductController::class, 'label'])->name('products.label');
     Route::resource('products', ProductController::class)->except('show', 'update');

@@ -54,7 +54,7 @@ export default function Form({ auth, product, categories, suppliers }) {
         minimum: product?.minimum ?? "",
         location: product?.location ?? "",
         weight: product?.weight ?? "",
-        lenght: product?.lenght ?? "",
+        length: product?.length ?? "",
         width: product?.width ?? "",
         height: product?.height ?? "",
         category_id: product?.category_id ?? "",

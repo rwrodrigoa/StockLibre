@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ProductExport;
 use App\Models\Category;
 use App\Models\Historic;
 use App\Models\Product;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 use Picqer\Barcode\BarcodeGeneratorHTML;
 
 class ProductController extends Controller
@@ -168,5 +170,15 @@ class ProductController extends Controller
             'barcode' => $barcode,
         ])->setPaper($labelSize);
         return $pdf->stream('Etiqueta ' . $product->name . '.pdf');
+    }
+
+    public function exportXLSX(Request $request)
+    {
+        return Excel::download(new ProductExport($request->user(), $request->only(['search'])), 'Produtos.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+    }
+
+    public function exportPDF(Request $request)
+    {
+        return Excel::download(new ProductExport($request->user(), $request->only(['search'])), 'Produtos.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 }
