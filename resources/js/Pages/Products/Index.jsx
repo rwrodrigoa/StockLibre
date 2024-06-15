@@ -61,7 +61,7 @@ export default function Index({ auth, products, filter }) {
             <Card>
                 <CardHeader>
                     <CardTitle className="flex items-center justify-between">
-                        <div>Fornecedores</div>
+                        <div>Produtos</div>
                         <div className="flex gap-2">
                             <TooltipProvider>
                                 <Tooltip>
