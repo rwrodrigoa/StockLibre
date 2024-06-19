@@ -31,6 +31,10 @@ A motivação por trás deste projeto é a escassez de ferramentas acessíveis q
 - **Estilização:** TailwindCSS
 - **Banco de Dados:** MySQL (pode ser utilizado SQLite3 também)
 
+## Acesso ao Sistema
+
+O StockLibre está hospedado para uso [aqui](https://stocklibre.com.br/). De forma gratuita e sem limitações. O que acha de criar uma conta agora mesmo?
+
 ## Instalação
 
 ### Pré-requisitos
@@ -91,10 +95,6 @@ Antes de iniciar a instalação, certifique-se de ter os seguintes softwares ins
     ```
 
 O StockLibre estará disponível em `http://localhost:8000`.
-
-## Acesso ao Sistema
-
-O StockLibre está hospedado para uso [aqui](https://stocklibre.com.br/). De forma gratuita e sem limitações. O que acha de criar uma conta agora mesmo?
 
 ## Licença
 
