@@ -1,66 +1,110 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+![stocklibre_logo](https://github.com/rwrodrigoa/StockLibre/assets/55023310/34a43a00-17ef-4850-aeb5-288765a5d8d2)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+StockLibre é uma solução de código aberto para a gestão de estoque e inventário, projetada especificamente para atender às necessidades de pequenas empresas. O sistema é fácil de usar, altamente personalizável e oferece uma gama de funcionalidades que ajudam a otimizar a gestão de estoque e reduzir custos operacionais.
 
-## About Laravel
+## Índice
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Sobre o Projeto](#sobre-o-projeto)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Acesso ao sistema](#acesso-ao-sistema)
+- [Instalação](#instalação)
+- [Licença](#licença)
+- [Contato](#contato)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Sobre o Projeto
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+O StockLibre foi desenvolvido para fornecer uma alternativa acessível e eficiente às soluções proprietárias de gestão de stoque disponíveis no mercado. Ele permite que pequenas empresas gerenciem seus estoques de maneira eficaz, com funcionalidades que incluem:
 
-## Learning Laravel
+- Cadastro de produtos
+- Cadastro de fornecedores
+- Gerenciamento por categorias
+- Rastreio de estoque
+- Geração de relatórios detalhados
+- Integração com código de barras
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+A motivação por trás deste projeto é a escassez de ferramentas acessíveis que atendam às necessidades de pequenas empresas com orçamentos limitados.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Tecnologias Utilizadas
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Backend:** PHP com Laravel
+- **Frontend:** React
+- **Estilização:** TailwindCSS
+- **Banco de Dados:** MySQL (pode ser utilizado SQLite3 também)
 
-## Laravel Sponsors
+## Instalação
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Pré-requisitos
 
-### Premium Partners
+Antes de iniciar a instalação, certifique-se de ter os seguintes softwares instalados:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- [PHP > 8.1](https://www.php.net/downloads.php)
+- [Composer](https://getcomposer.org)
+- [Node.js e npm](https://nodejs.org)
 
-## Contributing
+### Passos para Instalação
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/rwrodrigoa/StockLibre.git
+   cd StockLibre
+   ```
+   
+2. **Configure o ambiente:**
+   Copie o arquivo de exemplo `.env` e ajuste as configurações conforme necessário:
+   ```bash
+   cp .env.example .env
+   ```
 
-## Code of Conduct
+3. **Instale as dependências do backend:**
+   ```bash
+   composer install
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4. **Instale as dependências do frontend:**
+   ```bash
+   npm install
+   ```
 
-## Security Vulnerabilities
+5. **Inicie o banco de dados:**
+   ```bash
+   php artisan migrate
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+6. **Gere a chave de aplicação:**
+   ```bash
+   php artisan key:generate
+   ```
 
-## License
+7. **Criar link simbólico do storage:**
+   ```bash
+   php artisan storage:link
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+8. **Inicie o servidor frontend:**
+   ```bash
+   npm run dev
+   ```
+
+9. **Inicie o servidor backend:**
+    ```bash
+    php artisan serve
+    ```
+
+O StockLibre estará disponível em `http://localhost:8000`.
+
+## Acesso ao Sistema
+
+O StockLibre está hospedado para uso [aqui](https://stocklibre.com.br/). De forma gratuita e sem limitações. O que acha de criar uma conta agora mesmo?
+
+## Licença
+
+Este projeto está licenciado sob a [MIT license](https://opensource.org/licenses/MIT).
+
+## Contato
+
+Rodrigo Alfredo Weiss - suporte@rodrigoweiss.com
+Sinta-se à vontade para enviar um e-mail caso tenha perguntas ou sugestões!
+
+---
+
+Agradeço por usar o StockLibre e espero que ele atenda às suas necessidades de gestão de estoque!
