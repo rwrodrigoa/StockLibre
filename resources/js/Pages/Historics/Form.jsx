@@ -32,6 +32,7 @@ export default function Form({ auth }) {
         quantity: 1,
         type: "Retirar do Estoque",
         description: "",
+        invoice: "",
     });
 
     const codeInput = useRef();
@@ -108,6 +109,23 @@ export default function Form({ auth }) {
                                 />
                                 <InputError
                                     message={errors.quantity}
+                                    className="mt-2"
+                                />
+                            </div>
+                            <div className="mt-4 md:mt-0">
+                                <Label htmlFor="invoice">Nota Fiscal</Label>
+                                <Input
+                                    id="invoice"
+                                    type="number"
+                                    name="invoice"
+                                    value={data.invoice}
+                                    className="block w-full mt-1"
+                                    onChange={(e) =>
+                                        setData("invoice", e.target.value)
+                                    }
+                                />
+                                <InputError
+                                    message={errors.invoice}
                                     className="mt-2"
                                 />
                             </div>

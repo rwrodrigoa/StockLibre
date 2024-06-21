@@ -38,6 +38,7 @@ class HistoricController extends Controller
             'quantity' => 'required|integer|numeric|min:1',
             'type' => 'required|string',
             'description' => 'nullable|string|min:8',
+            'invoice' => 'nullable|integer|numeric',
             'code' => 'required|exists:products,code,user_id,' . $request->user()->id,
         ]);
 
@@ -59,6 +60,7 @@ class HistoricController extends Controller
             'quantity' => $quantity,
             'type' => $validated['type'],
             'description' => $description,
+            'invoice' => $validated['invoice'],
             'product_id' => $product->id,
             'supplier_id' => $product->supplier?->id,
             'user_id' => $request->user()->id,

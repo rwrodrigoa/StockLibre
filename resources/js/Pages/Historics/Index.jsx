@@ -132,7 +132,7 @@ export default function Index({ auth, historics, filter }) {
                             <Input
                                 id="search"
                                 type="text"
-                                placeholder="Pesquisar (tipo, produto ou fornecedor) "
+                                placeholder="Pesquisar (nota fiscal, tipo, produto ou fornecedor) "
                                 name="search"
                                 ref={searchInput}
                                 value={data.search}
@@ -146,6 +146,7 @@ export default function Index({ auth, historics, filter }) {
                         <TableHeader>
                             <TableRow>
                                 <TableHead>Data</TableHead>
+                                <TableHead>Nota Fiscal</TableHead>
                                 <TableHead>Tipo</TableHead>
                                 <TableHead className="text-center">
                                     Quantidade
@@ -162,6 +163,7 @@ export default function Index({ auth, historics, filter }) {
                                             historic.created_at
                                         ).toLocaleDateString()}
                                     </TableCell>
+                                    <TableCell>{historic.invoice}</TableCell>
                                     <TableCell>{historic.type}</TableCell>
                                     <TableCell className="text-center">
                                         {historic.quantity > 0

@@ -17,6 +17,7 @@ class Historic extends Model
         'quantity',
         'type',
         'description',
+        'invoice',
         'user_id',
         'product_id',
         'supplier_id',
@@ -49,7 +50,8 @@ class Historic extends Model
                         })
                         ->orWhereHas('supplier', function ($query) use ($value) {
                             $query->where('name', 'like', '%' . $value . '%');
-                        });
+                        })
+                        ->orWhere('invoice', $value);
                 }
             )->when(
                 $filters['date'] ?? false,

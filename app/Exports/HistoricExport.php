@@ -53,7 +53,8 @@ class HistoricExport implements FromQuery, WithMapping, WithColumnFormatting, Sh
                         })
                         ->orWhereHas('supplier', function ($query) use ($value) {
                             $query->where('name', 'like', '%' . $value . '%');
-                        });
+                        })
+                        ->orWhere('invoice', $value);
                 }
             )
             ->when(
@@ -69,6 +70,7 @@ class HistoricExport implements FromQuery, WithMapping, WithColumnFormatting, Sh
     {
         return [
             Date::dateTimeToExcel($historic->created_at),
+            $historic->invoice,
             $historic->type,
             $historic->quantity,
             $historic->product->name,
@@ -86,7 +88,7 @@ class HistoricExport implements FromQuery, WithMapping, WithColumnFormatting, Sh
     public function columnWidths(): array
     {
         return [
-            'E' => 53,
+            'F' => 53,
         ];
     }
 
@@ -167,6 +169,7 @@ class HistoricExport implements FromQuery, WithMapping, WithColumnFormatting, Sh
     {
         return [
             'Data',
+            'Nota Fiscal',
             'Tipo de movimentação',
             'Quantidade',
             'Produto',
